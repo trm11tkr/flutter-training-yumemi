@@ -93,7 +93,7 @@ class _WeatherViewState extends State<WeatherView> {
                         Expanded(
                           child: Center(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: Navigator.of(context).pop,
                               child: const Text('Close'),
                             ),
                           ),
