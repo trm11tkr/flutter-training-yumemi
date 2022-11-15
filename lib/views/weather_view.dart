@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_training/utils/logger.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherView extends StatefulWidget {
@@ -17,7 +18,7 @@ class _WeatherViewState extends State<WeatherView> {
       final weather = client.fetchSimpleWeather();
       return weather;
     } on YumemiWeatherError catch (e) {
-      print(e);
+      logger.shout(e);
       return null;
     }
   }
