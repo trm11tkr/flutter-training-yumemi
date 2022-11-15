@@ -54,29 +54,38 @@ class WeatherView extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 80,
-            ),
-            SizedBox(
-              width: deviceWidth / 2,
-              child: Row(
+            Expanded(
+              child: Column(
                 children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text('Close'),
-                    ),
+                  const SizedBox(
+                    height: 80,
                   ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text('Reload'),
+                  SizedBox(
+                    width: deviceWidth / 2,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: TextButton(
+                              onPressed: () {},
+                              child: const Text('Close'),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: TextButton(
+                              onPressed: () {},
+                              child: const Text('Reload'),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            const Spacer(),
           ],
         ),
       ),
