@@ -10,8 +10,8 @@ class WeatherView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             SizedBox(
               width: deviceWidth / 2,
               child: Column(
@@ -76,6 +76,7 @@ class WeatherView extends StatelessWidget {
                 ],
               ),
             ),
+            const Spacer(),
           ],
         ),
       ),
