@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_training/utils/logger.dart';
+import 'package:yumemi_weather/yumemi_weather.dart';
 
-class WeatherView extends StatelessWidget {
+class WeatherView extends StatefulWidget {
   const WeatherView({super.key});
+
+  @override
+  State<WeatherView> createState() => _WeatherViewState();
+}
+
+class _WeatherViewState extends State<WeatherView> {
+  final _weatherClient = YumemiWeather();
+
+  SvgPicture? _currentWeather;
+
+  String? _fetchWeather(YumemiWeather client) {
+    try {
+      final weather = client.fetchSimpleWeather();
+      return weather;
+    } on YumemiWeatherError catch (e) {
+      logger.shout(e);
+      return null;
+    }
+  }
+
+  SvgPicture _weatherToImage(String weather) {
+    return SvgPicture.asset('assets/images/$weather.svg');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +42,9 @@ class WeatherView extends StatelessWidget {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  const AspectRatio(
+                  AspectRatio(
                     aspectRatio: 1,
-                    child: Placeholder(),
+                    child: _currentWeather ?? const Placeholder(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -75,7 +101,16 @@ class WeatherView extends StatelessWidget {
                         Expanded(
                           child: Center(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                final weather = _fetchWeather(_weatherClient);
+                                if (weather == null) {
+                                  return;
+                                } else {
+                                  setState(() {
+                                    _currentWeather = _weatherToImage(weather);
+                                  });
+                                }
+                              },
                               child: const Text('Reload'),
                             ),
                           ),

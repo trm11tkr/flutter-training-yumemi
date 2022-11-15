@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/utils/logger.dart';
 import 'package:flutter_training/views/weather_view.dart';
 
 void main() {
+  // Logger初期化
+  Logger.configure();
   runApp(const MyApp());
 }
 
