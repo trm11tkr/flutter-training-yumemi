@@ -35,10 +35,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/cloudy.svg
-    - assets/images/rainy.svg
-    - assets/images/sunny.svg
-
+    - assets/images/
+    
   # fonts:
   #   - family: Schyler
   #     fonts:
