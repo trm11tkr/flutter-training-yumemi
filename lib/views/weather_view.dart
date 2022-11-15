@@ -11,7 +11,9 @@ class WeatherView extends StatefulWidget {
 }
 
 class _WeatherViewState extends State<WeatherView> {
-  Widget? _currentWeather;
+  final _weatherClient = YumemiWeather();
+
+  SvgPicture? _currentWeather;
 
   String? _fetchWeather(YumemiWeather client) {
     try {
@@ -30,8 +32,6 @@ class _WeatherViewState extends State<WeatherView> {
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
-
-    final weatherClient = YumemiWeather();
 
     return Scaffold(
       body: Center(
@@ -102,7 +102,7 @@ class _WeatherViewState extends State<WeatherView> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                final weather = _fetchWeather(weatherClient);
+                                final weather = _fetchWeather(_weatherClient);
                                 if (weather == null) {
                                   return;
                                 } else {
