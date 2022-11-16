@@ -10,23 +10,30 @@ class StartUpView extends StatefulWidget {
 
 class _StartUpViewState extends State<StartUpView> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     // Widgetの描画が完了するまで待機
-    WidgetsBinding.instance.endOfFrame.then((_) async {
-      // 500ミリ秒待機
-      await Future<void>.delayed(
-        const Duration(milliseconds: 500),
-      ).then((_) async {
-        // WeatherView に遷移
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => const WeatherView(),
-          ),
-        );
-        // pop されると再描画
-        setState(() {});
-      });
+    WidgetsBinding.instance.endOfFrame;
+    super.initState();
+  }
+
+  Future<void> waitAndPush() async {
+    // 500ミリ秒待機
+    await Future<void>.delayed(
+      const Duration(milliseconds: 500),
+    ).then((_) async {
+      // WeatherView に遷移
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (context) => const WeatherView(),
+        ),
+      );
+      setState(() {});
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    waitAndPush();
     return const Scaffold();
   }
 }
