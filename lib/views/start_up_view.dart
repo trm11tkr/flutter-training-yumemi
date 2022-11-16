@@ -12,28 +12,33 @@ class _StartUpViewState extends State<StartUpView> {
   @override
   void initState() {
     // Widgetの描画が完了するまで待機
-    WidgetsBinding.instance.endOfFrame;
+    WidgetsBinding.instance.endOfFrame.then((_) {
+      _awaitAndPush();
+    });
     super.initState();
   }
 
-  Future<void> waitAndPush() async {
+  Future<void> _awaitAndPush() async {
     // 500ミリ秒待機
     await Future<void>.delayed(
       const Duration(milliseconds: 500),
-    ).then((_) async {
-      // WeatherView に遷移
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (context) => const WeatherView(),
-        ),
-      );
-      setState(() {});
-    });
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    // WeatherView に遷移
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => const WeatherView(),
+      ),
+    );
+    await _awaitAndPush();
   }
 
   @override
   Widget build(BuildContext context) {
-    waitAndPush();
     return const Scaffold();
   }
 }
