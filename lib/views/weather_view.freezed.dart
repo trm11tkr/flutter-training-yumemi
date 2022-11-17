@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FetchWeatherResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(Weather weather) $default, {
+    TResult Function(WeatherResult weather) $default, {
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(Weather weather)? $default, {
+    TResult? Function(WeatherResult weather)? $default, {
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(Weather weather)? $default, {
+    TResult Function(WeatherResult weather)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -79,7 +79,9 @@ abstract class _$$DataCopyWith<$Res> {
   factory _$$DataCopyWith(_$Data value, $Res Function(_$Data) then) =
       __$$DataCopyWithImpl<$Res>;
   @useResult
-  $Res call({Weather weather});
+  $Res call({WeatherResult weather});
+
+  $WeatherResultCopyWith<$Res> get weather;
 }
 
 /// @nodoc
@@ -98,8 +100,16 @@ class __$$DataCopyWithImpl<$Res>
       null == weather
           ? _value.weather
           : weather // ignore: cast_nullable_to_non_nullable
-              as Weather,
+              as WeatherResult,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $WeatherResultCopyWith<$Res> get weather {
+    return $WeatherResultCopyWith<$Res>(_value.weather, (value) {
+      return _then(_value.copyWith(weather: value));
+    });
   }
 }
 
@@ -109,7 +119,7 @@ class _$Data implements Data {
   const _$Data(this.weather);
 
   @override
-  final Weather weather;
+  final WeatherResult weather;
 
   @override
   String toString() {
@@ -136,7 +146,7 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(Weather weather) $default, {
+    TResult Function(WeatherResult weather) $default, {
     required TResult Function(String message) error,
   }) {
     return $default(weather);
@@ -145,7 +155,7 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(Weather weather)? $default, {
+    TResult? Function(WeatherResult weather)? $default, {
     TResult? Function(String message)? error,
   }) {
     return $default?.call(weather);
@@ -154,7 +164,7 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(Weather weather)? $default, {
+    TResult Function(WeatherResult weather)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -197,9 +207,9 @@ class _$Data implements Data {
 }
 
 abstract class Data implements FetchWeatherResult {
-  const factory Data(final Weather weather) = _$Data;
+  const factory Data(final WeatherResult weather) = _$Data;
 
-  Weather get weather;
+  WeatherResult get weather;
   @JsonKey(ignore: true)
   _$$DataCopyWith<_$Data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -268,7 +278,7 @@ class _$ErrorDetails implements ErrorDetails {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(Weather weather) $default, {
+    TResult Function(WeatherResult weather) $default, {
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -277,7 +287,7 @@ class _$ErrorDetails implements ErrorDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(Weather weather)? $default, {
+    TResult? Function(WeatherResult weather)? $default, {
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -286,7 +296,7 @@ class _$ErrorDetails implements ErrorDetails {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(Weather weather)? $default, {
+    TResult Function(WeatherResult weather)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
