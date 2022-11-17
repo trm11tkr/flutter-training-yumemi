@@ -8,17 +8,13 @@ class StartUpView extends StatefulWidget {
   State<StartUpView> createState() => _StartUpViewState();
 }
 
-class _StartUpViewState extends State<StartUpView> {
+class _StartUpViewState extends State<StartUpView> with AfterLayoutMixin {
   @override
-  void initState() {
-    // Widgetの描画が完了するまで待機
-    WidgetsBinding.instance.endOfFrame.then((_) {
-      _awaitAndPush();
-    });
-    super.initState();
+  void afterFirstLayout() {
+    awaitAndPush();
   }
 
-  Future<void> _awaitAndPush() async {
+  Future<void> awaitAndPush() async {
     // 500ミリ秒待機
     await Future<void>.delayed(
       const Duration(milliseconds: 500),
@@ -34,11 +30,26 @@ class _StartUpViewState extends State<StartUpView> {
         builder: (context) => const WeatherView(),
       ),
     );
-    await _awaitAndPush();
+    await awaitAndPush();
   }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold();
   }
+}
+
+mixin AfterLayoutMixin<T extends StatefulWidget> on State<T> {
+  @override
+  void initState() {
+    super.initState();
+    // 描画完了を待機
+    WidgetsBinding.instance.endOfFrame.then((_) {
+      if (mounted) {
+        afterFirstLayout();
+      }
+    });
+  }
+  
+  void afterFirstLayout() {}
 }
