@@ -36,6 +36,8 @@ class _WeatherViewState extends State<WeatherView> {
   final _weatherClient = YumemiWeather();
 
   String? _currentWeather;
+  String _maxTemperature = '** ℃';
+  String _minTemperature = '** ℃';
 
   FetchWeatherResult _fetchWeather(YumemiWeather client) {
     try {
@@ -77,7 +79,7 @@ class _WeatherViewState extends State<WeatherView> {
                       children: [
                         Expanded(
                           child: Text(
-                            '** ℃',
+                            _minTemperature,
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -89,7 +91,7 @@ class _WeatherViewState extends State<WeatherView> {
                         ),
                         Expanded(
                           child: Text(
-                            '** ℃',
+                            _maxTemperature,
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -132,6 +134,10 @@ class _WeatherViewState extends State<WeatherView> {
                                     setState(() {
                                       _currentWeather =
                                           weather.weatherCondition;
+                                      _maxTemperature =
+                                          '${weather.maxTemperature}℃';
+                                      _minTemperature =
+                                          '${weather.minTemperature}℃';
                                     });
                                   },
                                   error: (message) {
