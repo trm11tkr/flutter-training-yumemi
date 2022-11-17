@@ -10,13 +10,11 @@ environment:
   sdk: '>=2.18.4 <3.0.0'
 
 dependencies:
-  build_runner: ^2.3.2
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
 
   flutter_svg: ^1.1.6
-  freezed: ^2.2.1
   freezed_annotation: ^2.2.0
   simple_logger: ^1.9.0+1
 
@@ -28,9 +26,11 @@ dependencies:
 
 dev_dependencies:
   blendthink_lints: ^3.0.0
+  build_runner: ^2.3.2
   flutter_lints: ^2.0.0
   flutter_test: 
     sdk: flutter
+  freezed: ^2.2.1
 
 # The following section is specific to Flutter packages.
 flutter:
