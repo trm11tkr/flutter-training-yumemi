@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_training/state/weather/models/weather.dart';
 import 'package:flutter_training/utils/logger.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
@@ -9,9 +12,16 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 
 part 'weather_view.freezed.dart';
 
+const _defaultWeatherApiParam = '''
+{
+  "area": "tokyo",
+  "date": "2020-04-01T12:00:00+09:00"
+}
+''';
+
 @freezed
 class FetchWeatherResult with _$FetchWeatherResult {
-  const factory FetchWeatherResult(String weather) = Data;
+  const factory FetchWeatherResult(Weather weather) = Data;
   const factory FetchWeatherResult.error(String message) = ErrorDetails;
 }
 
@@ -29,8 +39,12 @@ class _WeatherViewState extends State<WeatherView> {
 
   FetchWeatherResult _fetchWeather(YumemiWeather client) {
     try {
-      final weather = client.fetchThrowsWeather('kyoto');
-      return FetchWeatherResult(weather);
+      final weatherJson = client.fetchWeather(_defaultWeatherApiParam);
+      final weather =
+          Weather.fromJson(jsonDecode(weatherJson) as Map<String, dynamic>);
+      return FetchWeatherResult(
+        weather,
+      );
     } on YumemiWeatherError catch (error) {
       logger.shout(error);
       switch (error) {
@@ -116,7 +130,8 @@ class _WeatherViewState extends State<WeatherView> {
                                 _fetchWeather(_weatherClient).when(
                                   (weather) {
                                     setState(() {
-                                      _currentWeather = weather;
+                                      _currentWeather =
+                                          weather.weatherCondition;
                                     });
                                   },
                                   error: (message) {
