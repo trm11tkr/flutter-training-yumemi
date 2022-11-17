@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/utils/logger.dart';
+import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
+import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
 import 'package:flutter_training/views/components/weather_image_panel.dart';
+import 'package:flutter_training/views/constants/strings.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherView extends StatefulWidget {
@@ -17,10 +19,9 @@ class _WeatherViewState extends State<WeatherView> {
 
   String? _fetchWeather(YumemiWeather client) {
     try {
-      final weather = client.fetchSimpleWeather();
+      final weather = client.fetchThrowsWeather('kyoto');
       return weather;
-    } on YumemiWeatherError catch (e) {
-      logger.shout(e);
+    } on YumemiWeatherError {
       return null;
     }
   }
@@ -97,7 +98,9 @@ class _WeatherViewState extends State<WeatherView> {
                               onPressed: () {
                                 final weather = _fetchWeather(_weatherClient);
                                 if (weather == null) {
-                                  return;
+                                  const ErrorDialog(
+                                    title: Strings.simpleError,
+                                  ).present(context);
                                 } else {
                                   setState(() {
                                     _currentWeather = weather;
