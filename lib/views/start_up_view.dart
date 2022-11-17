@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/utils/logger.dart';
 import 'package:flutter_training/views/weather_view.dart';
 
 class StartUpView extends StatefulWidget {
@@ -9,26 +8,10 @@ class StartUpView extends StatefulWidget {
   State<StartUpView> createState() => _StartUpViewState();
 }
 
-class _StartUpViewState extends State<StartUpView> with _AwaitAndPopStateMixin {
+class _StartUpViewState extends State<StartUpView> with AfterLayoutMixin {
   @override
-  void initState() {
-    super.initState();
+  void afterFirstLayout() {
     awaitAndPush();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-}
-
-mixin _AwaitAndPopStateMixin on State<StartUpView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.endOfFrame.then((_) {
-      logger.info('build done');
-    });
   }
 
   Future<void> awaitAndPush() async {
@@ -49,4 +32,24 @@ mixin _AwaitAndPopStateMixin on State<StartUpView> {
     );
     await awaitAndPush();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
+mixin AfterLayoutMixin<T extends StatefulWidget> on State<T> {
+  @override
+  void initState() {
+    super.initState();
+    // 描画完了を待機
+    WidgetsBinding.instance.endOfFrame.then((_) {
+      if (mounted) {
+        afterFirstLayout();
+      }
+    });
+  }
+  
+  void afterFirstLayout() {}
 }
