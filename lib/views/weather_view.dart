@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/utils/logger.dart';
+import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
+import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
+import 'package:flutter_training/views/components/weather_image_panel.dart';
+import 'package:flutter_training/views/constants/strings.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
+
+part 'weather_view.freezed.dart';
+
+@freezed
+class FetchWeatherResult with _$FetchWeatherResult {
+  const factory FetchWeatherResult(String weather) = Data;
+  const factory FetchWeatherResult.error(String message) = ErrorDetails;
+}
 
 class WeatherView extends StatefulWidget {
   const WeatherView({super.key});
@@ -13,20 +25,22 @@ class WeatherView extends StatefulWidget {
 class _WeatherViewState extends State<WeatherView> {
   final _weatherClient = YumemiWeather();
 
-  SvgPicture? _currentWeather;
+  String? _currentWeather;
 
-  String? _fetchWeather(YumemiWeather client) {
+  FetchWeatherResult _fetchWeather(YumemiWeather client) {
     try {
-      final weather = client.fetchSimpleWeather();
-      return weather;
-    } on YumemiWeatherError catch (e) {
-      logger.shout(e);
-      return null;
-    }
-  }
+      final weather = client.fetchThrowsWeather('kyoto');
+      return FetchWeatherResult(weather);
+    } on YumemiWeatherError catch (error) {
+      logger.shout(error);
+      switch (error) {
+        case YumemiWeatherError.invalidParameter:
+          return const FetchWeatherResult.error(Strings.invalidParameterError);
 
-  SvgPicture _weatherToImage(String weather) {
-    return SvgPicture.asset('assets/images/$weather.svg');
+        case YumemiWeatherError.unknown:
+          return const FetchWeatherResult.error(Strings.unknownError);
+      }
+    }
   }
 
   @override
@@ -42,10 +56,7 @@ class _WeatherViewState extends State<WeatherView> {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: _currentWeather ?? const Placeholder(),
-                  ),
+                  WeatherImagePanel(currentWeather: _currentWeather),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
@@ -102,14 +113,18 @@ class _WeatherViewState extends State<WeatherView> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                final weather = _fetchWeather(_weatherClient);
-                                if (weather == null) {
-                                  return;
-                                } else {
-                                  setState(() {
-                                    _currentWeather = _weatherToImage(weather);
-                                  });
-                                }
+                                _fetchWeather(_weatherClient).when(
+                                  (weather) {
+                                    setState(() {
+                                      _currentWeather = weather;
+                                    });
+                                  },
+                                  error: (message) {
+                                    ErrorDialog(
+                                      title: message,
+                                    ).present(context);
+                                  },
+                                );
                               },
                               child: const Text('Reload'),
                             ),
