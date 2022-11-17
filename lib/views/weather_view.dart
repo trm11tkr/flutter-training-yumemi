@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_training/utils/logger.dart';
+import 'package:flutter_training/views/components/weather_image_panel.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherView extends StatefulWidget {
@@ -13,7 +13,7 @@ class WeatherView extends StatefulWidget {
 class _WeatherViewState extends State<WeatherView> {
   final _weatherClient = YumemiWeather();
 
-  SvgPicture? _currentWeather;
+  String? _currentWeather;
 
   String? _fetchWeather(YumemiWeather client) {
     try {
@@ -23,10 +23,6 @@ class _WeatherViewState extends State<WeatherView> {
       logger.shout(e);
       return null;
     }
-  }
-
-  SvgPicture _weatherToImage(String weather) {
-    return SvgPicture.asset('assets/images/$weather.svg');
   }
 
   @override
@@ -42,10 +38,7 @@ class _WeatherViewState extends State<WeatherView> {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: _currentWeather ?? const Placeholder(),
-                  ),
+                  WeatherImagePanel(currentWeather: _currentWeather),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
@@ -107,7 +100,7 @@ class _WeatherViewState extends State<WeatherView> {
                                   return;
                                 } else {
                                   setState(() {
-                                    _currentWeather = _weatherToImage(weather);
+                                    _currentWeather = weather;
                                   });
                                 }
                               },
