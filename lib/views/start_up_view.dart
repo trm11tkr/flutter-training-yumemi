@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/utils/logger.dart';
 import 'package:flutter_training/views/weather_view.dart';
 
 class StartUpView extends StatefulWidget {
@@ -11,11 +12,8 @@ class StartUpView extends StatefulWidget {
 class _StartUpViewState extends State<StartUpView> with _AwaitAndPopStateMixin {
   @override
   void initState() {
-    // Widgetの描画が完了するまで待機
-    WidgetsBinding.instance.endOfFrame.then((_) {
-      awaitAndPush();
-    });
     super.initState();
+    awaitAndPush();
   }
 
   @override
@@ -25,6 +23,14 @@ class _StartUpViewState extends State<StartUpView> with _AwaitAndPopStateMixin {
 }
 
 mixin _AwaitAndPopStateMixin on State<StartUpView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.endOfFrame.then((_) {
+      logger.info('build done');
+    });
+  }
+
   Future<void> awaitAndPush() async {
     // 500ミリ秒待機
     await Future<void>.delayed(
