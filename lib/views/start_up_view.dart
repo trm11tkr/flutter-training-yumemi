@@ -8,17 +8,24 @@ class StartUpView extends StatefulWidget {
   State<StartUpView> createState() => _StartUpViewState();
 }
 
-class _StartUpViewState extends State<StartUpView> {
+class _StartUpViewState extends State<StartUpView> with _AwaitAndPopStateMixin {
   @override
   void initState() {
     // Widgetの描画が完了するまで待機
     WidgetsBinding.instance.endOfFrame.then((_) {
-      _awaitAndPush();
+      awaitAndPush();
     });
     super.initState();
   }
 
-  Future<void> _awaitAndPush() async {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
+mixin _AwaitAndPopStateMixin on State<StartUpView> {
+  Future<void> awaitAndPush() async {
     // 500ミリ秒待機
     await Future<void>.delayed(
       const Duration(milliseconds: 500),
@@ -34,11 +41,6 @@ class _StartUpViewState extends State<StartUpView> {
         builder: (context) => const WeatherView(),
       ),
     );
-    await _awaitAndPush();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+    await awaitAndPush();
   }
 }
