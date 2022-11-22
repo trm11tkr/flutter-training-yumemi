@@ -17,7 +17,10 @@ class WeatherResult with _$WeatherResult {
     required int minTemperature,
     required DateTime date,
   }) = _WeatherResult;
+  const WeatherResult._();
 
   factory WeatherResult.fromJson(Map<String, dynamic> json) =>
       _$WeatherResultFromJson(json);
+
+  String displayTemperature(int temperature) => '$temperature℃';
 }

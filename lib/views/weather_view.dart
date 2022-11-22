@@ -135,9 +135,13 @@ class _WeatherViewState extends State<WeatherView> {
                                       _currentWeatherCondition =
                                           weather.weatherCondition;
                                       _maxTemperature =
-                                          '${weather.maxTemperature}℃';
+                                          weather.displayTemperature(
+                                        weather.maxTemperature,
+                                      );
                                       _minTemperature =
-                                          '${weather.minTemperature}℃';
+                                          weather.displayTemperature(
+                                        weather.maxTemperature,
+                                      );
                                     });
                                   },
                                   error: (message) {
