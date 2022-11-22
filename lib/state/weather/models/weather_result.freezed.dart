@@ -20,7 +20,7 @@ WeatherResult _$WeatherResultFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WeatherResult {
-  String get weatherCondition => throw _privateConstructorUsedError;
+  WeatherCondition get weatherCondition => throw _privateConstructorUsedError;
   int get maxTemperature => throw _privateConstructorUsedError;
   int get minTemperature => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $WeatherResultCopyWith<$Res> {
       _$WeatherResultCopyWithImpl<$Res, WeatherResult>;
   @useResult
   $Res call(
-      {String weatherCondition,
+      {WeatherCondition weatherCondition,
       int maxTemperature,
       int minTemperature,
       DateTime date});
@@ -66,7 +66,7 @@ class _$WeatherResultCopyWithImpl<$Res, $Val extends WeatherResult>
       weatherCondition: null == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WeatherCondition,
       maxTemperature: null == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$_WeatherResultCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String weatherCondition,
+      {WeatherCondition weatherCondition,
       int maxTemperature,
       int minTemperature,
       DateTime date});
@@ -118,7 +118,7 @@ class __$$_WeatherResultCopyWithImpl<$Res>
       weatherCondition: null == weatherCondition
           ? _value.weatherCondition
           : weatherCondition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WeatherCondition,
       maxTemperature: null == maxTemperature
           ? _value.maxTemperature
           : maxTemperature // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ class _$_WeatherResult implements _WeatherResult {
       _$$_WeatherResultFromJson(json);
 
   @override
-  final String weatherCondition;
+  final WeatherCondition weatherCondition;
   @override
   final int maxTemperature;
   @override
@@ -196,7 +196,7 @@ class _$_WeatherResult implements _WeatherResult {
 
 abstract class _WeatherResult implements WeatherResult {
   const factory _WeatherResult(
-      {required final String weatherCondition,
+      {required final WeatherCondition weatherCondition,
       required final int maxTemperature,
       required final int minTemperature,
       required final DateTime date}) = _$_WeatherResult;
@@ -205,7 +205,7 @@ abstract class _WeatherResult implements WeatherResult {
       _$_WeatherResult.fromJson;
 
   @override
-  String get weatherCondition;
+  WeatherCondition get weatherCondition;
   @override
   int get maxTemperature;
   @override

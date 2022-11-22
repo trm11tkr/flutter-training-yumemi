@@ -29,7 +29,7 @@ class _WeatherViewState extends State<WeatherView> {
   final _weatherClient = YumemiWeather();
   final _weatherRequest = const WeatherRequest();
 
-  String? _currentWeatherCondition;
+  WeatherCondition? _currentWeatherCondition;
   String _maxTemperature = '** ℃';
   String _minTemperature = '** ℃';
 
@@ -73,7 +73,9 @@ class _WeatherViewState extends State<WeatherView> {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  WeatherImagePanel(currentWeather: _currentWeatherCondition),
+                  WeatherImagePanel(
+                    weatherCondition: _currentWeatherCondition,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
