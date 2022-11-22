@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_training/state/weather/models/weather.dart';
+import 'package:flutter_training/state/weather/models/weather_request.dart';
+import 'package:flutter_training/state/weather/models/weather_result.dart';
 import 'package:flutter_training/utils/logger.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
@@ -12,16 +12,9 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 
 part 'weather_view.freezed.dart';
 
-const _defaultWeatherApiParam = '''
-{
-  "area": "tokyo",
-  "date": "2020-04-01T12:00:00+09:00"
-}
-''';
-
 @freezed
 class FetchWeatherResult with _$FetchWeatherResult {
-  const factory FetchWeatherResult(Weather weather) = Data;
+  const factory FetchWeatherResult(WeatherResult weather) = Data;
   const factory FetchWeatherResult.error(String message) = ErrorDetails;
 }
 
@@ -34,19 +27,24 @@ class WeatherView extends StatefulWidget {
 
 class _WeatherViewState extends State<WeatherView> {
   final _weatherClient = YumemiWeather();
+  final _weatherRequest = const WeatherRequest();
 
-  String? _currentWeatherCondition;
+  WeatherCondition? _currentWeatherCondition;
   String _maxTemperature = '** ℃';
   String _minTemperature = '** ℃';
 
-  FetchWeatherResult _fetchWeather(YumemiWeather client) {
+  FetchWeatherResult _fetchWeather() {
     try {
-      final weatherJson = client.fetchWeather(_defaultWeatherApiParam);
-      final weather =
-          Weather.fromJson(jsonDecode(weatherJson) as Map<String, dynamic>);
-      return FetchWeatherResult(
-        weather,
+      final weatherJson = _weatherClient.fetchWeather(
+        jsonEncode(
+          _weatherRequest.toJson(),
+        ),
       );
+
+      final weather = WeatherResult.fromJson(
+        jsonDecode(weatherJson) as Map<String, dynamic>,
+      );
+      return FetchWeatherResult(weather);
     } on YumemiWeatherError catch (error) {
       logger.shout(error);
       switch (error) {
@@ -72,7 +70,9 @@ class _WeatherViewState extends State<WeatherView> {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  WeatherImagePanel(currentWeather: _currentWeatherCondition),
+                  WeatherImagePanel(
+                    weatherCondition: _currentWeatherCondition,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
@@ -129,15 +129,19 @@ class _WeatherViewState extends State<WeatherView> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                _fetchWeather(_weatherClient).when(
+                                _fetchWeather().when(
                                   (weather) {
                                     setState(() {
                                       _currentWeatherCondition =
                                           weather.weatherCondition;
                                       _maxTemperature =
-                                          '${weather.maxTemperature}℃';
+                                          weather.displayTemperature(
+                                        weather.maxTemperature,
+                                      );
                                       _minTemperature =
-                                          '${weather.minTemperature}℃';
+                                          weather.displayTemperature(
+                                        weather.maxTemperature,
+                                      );
                                     });
                                   },
                                   error: (message) {
