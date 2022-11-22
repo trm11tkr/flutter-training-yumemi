@@ -33,14 +33,11 @@ class _WeatherViewState extends State<WeatherView> {
   String _maxTemperature = '** ℃';
   String _minTemperature = '** ℃';
 
-  FetchWeatherResult _fetchWeather(
-    YumemiWeather client,
-    WeatherRequest request,
-  ) {
+  FetchWeatherResult _fetchWeather() {
     try {
-      final weatherJson = client.fetchWeather(
+      final weatherJson = _weatherClient.fetchWeather(
         jsonEncode(
-          request.toJson(),
+          _weatherRequest.toJson(),
         ),
       );
 
@@ -132,10 +129,7 @@ class _WeatherViewState extends State<WeatherView> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                _fetchWeather(
-                                  _weatherClient,
-                                  _weatherRequest,
-                                ).when(
+                                _fetchWeather().when(
                                   (weather) {
                                     setState(() {
                                       _currentWeatherCondition =
