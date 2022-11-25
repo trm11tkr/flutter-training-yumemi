@@ -5,7 +5,7 @@ import 'package:flutter_training/state/weather_view_ui_state/models/weather_view
 import 'package:flutter_training/state/weather_view_ui_state/providers/provider.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
-import 'package:flutter_training/views/components/weather_image_panel.dart';
+import 'package:flutter_training/views/components/weather_image_panel/component.dart';
 import 'package:flutter_training/views/constants/strings.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
