@@ -27,7 +27,7 @@ class WeatherViewUiStateNotifier extends StateNotifier<WeatherViewUiState> {
   WeatherViewUiStateNotifier({
     required this.yumemiWeatherClient,
     required this.weatherRequest,
-  }) : super(const WeatherViewUiState());
+  }) : super(const WeatherViewUiState.initial());
 
   final YumemiWeather yumemiWeatherClient;
   final WeatherRequest weatherRequest;

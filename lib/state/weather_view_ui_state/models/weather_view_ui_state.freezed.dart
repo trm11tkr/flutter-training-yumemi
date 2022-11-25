@@ -17,44 +17,44 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$WeatherViewUiState {
   @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function(WeatherResult weather) data,
     required TResult Function(YumemiWeatherError error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
     TResult? Function(WeatherResult weather)? data,
     TResult? Function(YumemiWeatherError error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function(WeatherResult weather)? data,
     TResult Function(YumemiWeatherError error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(Initial value) $default, {
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
     required TResult Function(YumemiError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(Initial value)? $default, {
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
     TResult? Function(Data value)? data,
     TResult? Function(YumemiError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(Initial value)? $default, {
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
     TResult Function(YumemiError value)? error,
     required TResult orElse(),
@@ -101,7 +101,7 @@ class _$Initial implements Initial {
 
   @override
   String toString() {
-    return 'WeatherViewUiState()';
+    return 'WeatherViewUiState.initial()';
   }
 
   @override
@@ -115,68 +115,68 @@ class _$Initial implements Initial {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function(WeatherResult weather) data,
     required TResult Function(YumemiWeatherError error) error,
   }) {
-    return $default();
+    return initial();
   }
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
     TResult? Function(WeatherResult weather)? data,
     TResult? Function(YumemiWeatherError error)? error,
   }) {
-    return $default?.call();
+    return initial?.call();
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function(WeatherResult weather)? data,
     TResult Function(YumemiWeatherError error)? error,
     required TResult orElse(),
   }) {
-    if ($default != null) {
-      return $default();
+    if (initial != null) {
+      return initial();
     }
     return orElse();
   }
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(Initial value) $default, {
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
     required TResult Function(YumemiError value) error,
   }) {
-    return $default(this);
+    return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(Initial value)? $default, {
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
     TResult? Function(Data value)? data,
     TResult? Function(YumemiError value)? error,
   }) {
-    return $default?.call(this);
+    return initial?.call(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(Initial value)? $default, {
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
     TResult Function(YumemiError value)? error,
     required TResult orElse(),
   }) {
-    if ($default != null) {
-      return $default(this);
+    if (initial != null) {
+      return initial(this);
     }
     return orElse();
   }
@@ -257,8 +257,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function(WeatherResult weather) data,
     required TResult Function(YumemiWeatherError error) error,
   }) {
@@ -267,8 +267,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
     TResult? Function(WeatherResult weather)? data,
     TResult? Function(YumemiWeatherError error)? error,
   }) {
@@ -277,8 +277,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function(WeatherResult weather)? data,
     TResult Function(YumemiWeatherError error)? error,
     required TResult orElse(),
@@ -291,8 +291,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(Initial value) $default, {
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
     required TResult Function(YumemiError value) error,
   }) {
@@ -301,8 +301,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(Initial value)? $default, {
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
     TResult? Function(Data value)? data,
     TResult? Function(YumemiError value)? error,
   }) {
@@ -311,8 +311,8 @@ class _$Data implements Data {
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(Initial value)? $default, {
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
     TResult Function(YumemiError value)? error,
     required TResult orElse(),
@@ -395,8 +395,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function() $default, {
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
     required TResult Function(WeatherResult weather) data,
     required TResult Function(YumemiWeatherError error) error,
   }) {
@@ -405,8 +405,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function()? $default, {
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
     TResult? Function(WeatherResult weather)? data,
     TResult? Function(YumemiWeatherError error)? error,
   }) {
@@ -415,8 +415,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function()? $default, {
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
     TResult Function(WeatherResult weather)? data,
     TResult Function(YumemiWeatherError error)? error,
     required TResult orElse(),
@@ -429,8 +429,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(Initial value) $default, {
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
     required TResult Function(YumemiError value) error,
   }) {
@@ -439,8 +439,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(Initial value)? $default, {
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
     TResult? Function(Data value)? data,
     TResult? Function(YumemiError value)? error,
   }) {
@@ -449,8 +449,8 @@ class _$YumemiError implements YumemiError {
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(Initial value)? $default, {
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
     TResult Function(YumemiError value)? error,
     required TResult orElse(),

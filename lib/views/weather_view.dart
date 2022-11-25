@@ -22,7 +22,9 @@ class WeatherView extends ConsumerWidget {
       weatherViewUiStateProvider,
       (previous, next) {
         next.when(
-          () {},
+          initial: () {
+            // 初期状態は何もしない
+          },
           data: (weather) {
             ref.read(weatherRepositoryProvider.notifier).update(
                   (state) => weather,

@@ -6,7 +6,7 @@ part 'weather_view_ui_state.freezed.dart';
 
 @freezed
 class WeatherViewUiState with _$WeatherViewUiState {
-  const factory WeatherViewUiState() = Initial;
+  const factory WeatherViewUiState.initial() = Initial;
   const factory WeatherViewUiState.data(WeatherResult weather) = Data;
   const factory WeatherViewUiState.error(YumemiWeatherError error) =
       YumemiError;
