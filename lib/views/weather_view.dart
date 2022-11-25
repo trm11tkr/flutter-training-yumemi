@@ -5,6 +5,8 @@ import 'package:flutter_training/state/weather_view_ui_state/models/weather_view
 import 'package:flutter_training/state/weather_view_ui_state/providers/provider.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
+import 'package:flutter_training/views/components/temperature/component.dart';
+import 'package:flutter_training/views/components/temperature/ui_state.dart';
 import 'package:flutter_training/views/components/weather_image_panel/component.dart';
 import 'package:flutter_training/views/constants/strings.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -15,7 +17,6 @@ class WeatherView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceWidth = MediaQuery.of(context).size.width;
-    final weatherResult = ref.watch(weatherRepositoryProvider);
 
     ref.listen<WeatherViewUiState>(
       weatherViewUiStateProvider,
@@ -60,35 +61,15 @@ class WeatherView extends ConsumerWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            weatherResult != null
-                                ? weatherResult.displayTemperature(
-                                    weatherResult.minTemperature,
-                                  )
-                                : '**℃',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.blue,
-                                ),
+                          child: TemperatureLabel(
+                            provider: minTemperatureProvider,
+                            color: Colors.blue,
                           ),
                         ),
                         Expanded(
-                          child: Text(
-                            weatherResult != null
-                                ? weatherResult.displayTemperature(
-                                    weatherResult.maxTemperature,
-                                  )
-                                : '**℃',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.red,
-                                ),
+                          child: TemperatureLabel(
+                            provider: maxTemperatureProvider,
+                            color: Colors.red,
                           ),
                         ),
                       ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/views/weather_view_with_provider.dart';
+import 'package:flutter_training/views/weather_view.dart';
 
 class StartUpView extends StatefulWidget {
   const StartUpView({super.key});
