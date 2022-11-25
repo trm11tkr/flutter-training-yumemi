@@ -16,8 +16,9 @@ class WeatherImagePanelUiState with _$WeatherImagePanelUiState {
 final weatherImagePanelProvider =
     StateProvider.autoDispose<WeatherImagePanelUiState>(
   (ref) {
-    final weatherCondition =
-        ref.watch(weatherRepositoryProvider)?.weatherCondition;
+    final weatherCondition = ref.watch(
+      weatherRepositoryProvider.select((weather) => weather?.weatherCondition),
+    );
     if (weatherCondition == null) {
       return const WeatherImagePanelUiState.initial();
     } else {
