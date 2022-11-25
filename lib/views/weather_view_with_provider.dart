@@ -1,65 +1,49 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_training/state/weather/models/weather_request.dart';
-import 'package:flutter_training/state/weather/models/weather_result.dart';
-import 'package:flutter_training/utils/logger.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_training/state/weather/providers/provider.dart';
+import 'package:flutter_training/state/weather_view_ui_state/models/weather_view_ui_state.dart';
+import 'package:flutter_training/state/weather_view_ui_state/providers/provider.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
 import 'package:flutter_training/views/components/weather_image_panel.dart';
 import 'package:flutter_training/views/constants/strings.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-part 'weather_view.freezed.dart';
-
-@freezed
-class FetchWeatherResult with _$FetchWeatherResult {
-  const factory FetchWeatherResult(WeatherResult weather) = Data;
-  const factory FetchWeatherResult.error(String message) = ErrorDetails;
-}
-
-class WeatherView extends StatefulWidget {
+class WeatherView extends ConsumerWidget {
   const WeatherView({super.key});
 
   @override
-  State<WeatherView> createState() => _WeatherViewState();
-}
-
-class _WeatherViewState extends State<WeatherView> {
-  final _weatherClient = YumemiWeather();
-  final _weatherRequest = const WeatherRequest();
-
-  WeatherCondition? _currentWeatherCondition;
-  String _maxTemperature = '** ℃';
-  String _minTemperature = '** ℃';
-
-  FetchWeatherResult _fetchWeather() {
-    try {
-      final weatherJson = _weatherClient.fetchWeather(
-        jsonEncode(
-          _weatherRequest.toJson(),
-        ),
-      );
-
-      final weather = WeatherResult.fromJson(
-        jsonDecode(weatherJson) as Map<String, dynamic>,
-      );
-      return FetchWeatherResult(weather);
-    } on YumemiWeatherError catch (error) {
-      logger.shout(error);
-      switch (error) {
-        case YumemiWeatherError.invalidParameter:
-          return const FetchWeatherResult.error(Strings.invalidParameterError);
-
-        case YumemiWeatherError.unknown:
-          return const FetchWeatherResult.error(Strings.unknownError);
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final deviceWidth = MediaQuery.of(context).size.width;
+    final weatherResult = ref.watch(weatherRepositoryProvider);
+
+    ref.listen<WeatherViewUiState>(
+      weatherViewUiStateProvider,
+      (previous, next) {
+        next.when(
+          () {},
+          data: (weather) {
+            ref.read(weatherRepositoryProvider.notifier).update(
+                  (state) => weather,
+                );
+          },
+          error: (error) {
+            String message;
+            switch (error) {
+              case YumemiWeatherError.invalidParameter:
+                message = Strings.invalidParameterError;
+                break;
+              case YumemiWeatherError.unknown:
+                message = Strings.unknownError;
+                break;
+            }
+            ErrorDialog(
+              title: message,
+            ).present(context);
+          },
+        );
+      },
+    );
 
     return Scaffold(
       body: Center(
@@ -70,16 +54,18 @@ class _WeatherViewState extends State<WeatherView> {
               width: deviceWidth / 2,
               child: Column(
                 children: [
-                  WeatherImagePanel(
-                    weatherCondition: _currentWeatherCondition,
-                  ),
+                  const WeatherImagePanel(),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
                           child: Text(
-                            _minTemperature,
+                            weatherResult != null
+                                ? weatherResult.displayTemperature(
+                                    weatherResult.minTemperature,
+                                  )
+                                : '**℃',
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -91,7 +77,11 @@ class _WeatherViewState extends State<WeatherView> {
                         ),
                         Expanded(
                           child: Text(
-                            _maxTemperature,
+                            weatherResult != null
+                                ? weatherResult.displayTemperature(
+                                    weatherResult.maxTemperature,
+                                  )
+                                : '**℃',
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -129,27 +119,9 @@ class _WeatherViewState extends State<WeatherView> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                _fetchWeather().when(
-                                  (weather) {
-                                    setState(() {
-                                      _currentWeatherCondition =
-                                          weather.weatherCondition;
-                                      _maxTemperature =
-                                          weather.displayTemperature(
-                                        weather.maxTemperature,
-                                      );
-                                      _minTemperature =
-                                          weather.displayTemperature(
-                                        weather.maxTemperature,
-                                      );
-                                    });
-                                  },
-                                  error: (message) {
-                                    ErrorDialog(
-                                      title: message,
-                                    ).present(context);
-                                  },
-                                );
+                                ref
+                                    .read(weatherViewUiStateProvider.notifier)
+                                    .fetchWeather();
                               },
                               child: const Text('Reload'),
                             ),
