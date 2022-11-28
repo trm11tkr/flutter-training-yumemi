@@ -11,10 +11,11 @@ class TemperatureUiState with _$TemperatureUiState {
 }
 
 // 最低気温を管理するプロバイダー
-final minTemperatureProvider = StateProvider.autoDispose<TemperatureUiState>(
+final minTemperatureUiStateProvider =
+    StateProvider.autoDispose<TemperatureUiState>(
   (ref) {
     final minTemperature = ref.watch(
-      weatherRepositoryProvider.select((weather) => weather?.minTemperature),
+      weatherStateProvider.select((weather) => weather?.minTemperature),
     );
     if (minTemperature == null) {
       return const TemperatureUiState.initial();
@@ -25,10 +26,11 @@ final minTemperatureProvider = StateProvider.autoDispose<TemperatureUiState>(
 );
 
 // 最高気温を管理するプロバイダー
-final maxTemperatureProvider = StateProvider.autoDispose<TemperatureUiState>(
+final maxTemperatureUiStateProvider =
+    StateProvider.autoDispose<TemperatureUiState>(
   (ref) {
     final maxTemperature = ref.watch(
-      weatherRepositoryProvider.select((weather) => weather?.maxTemperature),
+      weatherStateProvider.select((weather) => weather?.maxTemperature),
     );
     if (maxTemperature == null) {
       return const TemperatureUiState.initial();

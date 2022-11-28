@@ -2,29 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/views/components/temperature/ui_state.dart';
 
-class TemperatureLabel extends ConsumerWidget {
-  const TemperatureLabel({
-    super.key,
-    required this.provider,
-    required this.color,
-  });
+class _TemperatureLabel extends StatelessWidget {
+  const _TemperatureLabel({
+    required String temperature,
+    required Color textColor,
+  })  : _temperature = temperature,
+        _textColor = textColor;
 
-  final AutoDisposeStateProvider<TemperatureUiState> provider;
-  final Color color;
+  final String _temperature;
+  final Color _textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _temperature,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: _textColor,
+          ),
+    );
+  }
+}
+
+class MinTemperatureLabel extends ConsumerWidget {
+  const MinTemperatureLabel({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final temperature = ref.watch(provider);
+    final uiState = ref.watch(minTemperatureUiStateProvider);
+    final temperature = uiState.map(
+      initial: (value) => '**℃',
+      data: (value) => '$value℃',
+    );
 
-    return Text(
-      temperature.when(
-        initial: () => '**℃',
-        data: (temperature) => '$temperature℃',
-      ),
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: color,
-          ),
+    return _TemperatureLabel(
+      temperature: temperature,
+      textColor: Colors.blue,
+    );
+  }
+}
+
+
+class MaxTemperatureLabel extends ConsumerWidget {
+  const MaxTemperatureLabel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uiState = ref.watch(maxTemperatureUiStateProvider);
+    final temperature = uiState.map(
+      initial: (value) => '**℃',
+      data: (value) => '$value℃',
+    );
+
+    return _TemperatureLabel(
+      temperature: temperature,
+      textColor: Colors.red,
     );
   }
 }

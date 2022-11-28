@@ -6,7 +6,6 @@ import 'package:flutter_training/state/weather_view_ui_state/providers/provider.
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
 import 'package:flutter_training/views/components/temperature/component.dart';
-import 'package:flutter_training/views/components/temperature/ui_state.dart';
 import 'package:flutter_training/views/components/weather_image_panel/component.dart';
 import 'package:flutter_training/views/constants/strings.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
@@ -26,7 +25,7 @@ class WeatherView extends ConsumerWidget {
             // 初期状態は何もしない
           },
           data: (weather) {
-            ref.read(weatherRepositoryProvider.notifier).update(
+            ref.read(weatherStateProvider.notifier).update(
                   (state) => weather,
                 );
           },
@@ -61,18 +60,12 @@ class WeatherView extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
-                      children: [
+                      children: const [
                         Expanded(
-                          child: TemperatureLabel(
-                            provider: minTemperatureProvider,
-                            color: Colors.blue,
-                          ),
+                          child: MinTemperatureLabel(),
                         ),
                         Expanded(
-                          child: TemperatureLabel(
-                            provider: maxTemperatureProvider,
-                            color: Colors.red,
-                          ),
+                          child: MaxTemperatureLabel(),
                         ),
                       ],
                     ),
