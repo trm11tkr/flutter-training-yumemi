@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_training/state/weather/providers/provider.dart';
-import 'package:flutter_training/state/weather_view_ui_state/models/weather_view_ui_state.dart';
-import 'package:flutter_training/state/weather_view_ui_state/providers/provider.dart';
+import 'package:flutter_training/data/use_case/fetch_weather_use_case.dart';
 import 'package:flutter_training/views/components/dialogs/alert_dialog_model.dart';
 import 'package:flutter_training/views/components/dialogs/error_dialog.dart';
-import 'package:flutter_training/views/components/temperature/component.dart';
-import 'package:flutter_training/views/components/weather_image_panel/component.dart';
-import 'package:flutter_training/views/constants/strings.dart';
-import 'package:yumemi_weather/yumemi_weather.dart';
+import 'package:flutter_training/views/components/weather_forecast_panel/components.dart';
+import 'package:flutter_training/views/ui_state/weather_view_ui_state.dart';
 
 class WeatherView extends ConsumerWidget {
   const WeatherView({super.key});
@@ -19,30 +15,14 @@ class WeatherView extends ConsumerWidget {
 
     ref.listen<WeatherViewUiState>(
       weatherViewUiStateProvider,
-      (previous, next) {
-        next.when(
-          initial: () {
-            // 初期状態は何もしない
-          },
-          data: (weather) {
-            ref.read(weatherStateProvider.notifier).update(
-                  (state) => weather,
-                );
-          },
+      (previous, uiState) {
+        uiState.maybeWhen(
           error: (error) {
-            String message;
-            switch (error) {
-              case YumemiWeatherError.invalidParameter:
-                message = Strings.invalidParameterError;
-                break;
-              case YumemiWeatherError.unknown:
-                message = Strings.unknownError;
-                break;
-            }
             ErrorDialog(
-              title: message,
+              title: error.message,
             ).present(context);
           },
+          orElse: () {},
         );
       },
     );
@@ -54,24 +34,7 @@ class WeatherView extends ConsumerWidget {
             const Spacer(),
             SizedBox(
               width: deviceWidth / 2,
-              child: Column(
-                children: [
-                  const WeatherImagePanel(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      children: const [
-                        Expanded(
-                          child: MinTemperatureLabel(),
-                        ),
-                        Expanded(
-                          child: MaxTemperatureLabel(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: const WeatherForecastPanel(),
             ),
             Expanded(
               child: Column(
@@ -96,7 +59,7 @@ class WeatherView extends ConsumerWidget {
                             child: TextButton(
                               onPressed: () {
                                 ref
-                                    .read(weatherViewUiStateProvider.notifier)
+                                    .read(fetchWeatherUseCaseProvider)
                                     .fetchWeather();
                               },
                               child: const Text('Reload'),

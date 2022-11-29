@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_training/views/components/temperature/ui_state.dart';
+import 'package:flutter_training/views/components/weather_forecast_panel/temperature/ui_state.dart';
 
 class _TemperatureLabel extends StatelessWidget {
   const _TemperatureLabel({
@@ -32,7 +32,7 @@ class MinTemperatureLabel extends ConsumerWidget {
     final uiState = ref.watch(minTemperatureUiStateProvider);
     final temperature = uiState.map(
       initial: (value) => '**℃',
-      data: (value) => '$value℃',
+      data: (value) => '${value.temperature}℃',
     );
 
     return _TemperatureLabel(
@@ -42,7 +42,6 @@ class MinTemperatureLabel extends ConsumerWidget {
   }
 }
 
-
 class MaxTemperatureLabel extends ConsumerWidget {
   const MaxTemperatureLabel({super.key});
 
@@ -51,7 +50,7 @@ class MaxTemperatureLabel extends ConsumerWidget {
     final uiState = ref.watch(maxTemperatureUiStateProvider);
     final temperature = uiState.map(
       initial: (value) => '**℃',
-      data: (value) => '$value℃',
+      data: (value) => '${value.temperature}℃',
     );
 
     return _TemperatureLabel(

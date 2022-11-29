@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_training/views/components/weather_image_panel/ui_state.dart';
+import 'package:flutter_training/views/components/weather_forecast_panel/weather_image_panel/ui_state.dart';
 
 class WeatherImagePanel extends ConsumerWidget {
   const WeatherImagePanel({
