@@ -10,7 +10,7 @@ class WeatherImagePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uiState = ref.watch(weatherImagePanelProvider);
+    final uiState = ref.watch(weatherImagePanelStateProvider);
     return AspectRatio(
       aspectRatio: 1,
       child: uiState.when(

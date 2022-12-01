@@ -5,8 +5,8 @@ part 'ui_state.freezed.dart';
 
 @freezed
 class TemperatureUiState with _$TemperatureUiState {
-  const factory TemperatureUiState.initial() = Initial;
-  const factory TemperatureUiState.data(int temperature) = Data;
+  const factory TemperatureUiState.initial() = _Initial;
+  const factory TemperatureUiState.data(int temperature) = _Data;
 }
 
 // 最低気温を管理するプロバイダー

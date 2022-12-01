@@ -11,15 +11,18 @@ class WeatherView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceWidth = MediaQuery.of(context).size.width;
-
     ref.listen<WeatherViewUiState>(
       weatherViewUiStateProvider,
       (previous, uiState) {
         uiState.maybeWhen(
-          error: (error) {
+          error: (message) {
             ErrorDialog(
-              title: error.message,
+              title: message,
+              onWillPop: () {
+                ref.read(weatherViewUiStateProvider.notifier).update(
+                      (state) => const WeatherViewUiState.initial(),
+                    );
+              },
             ).present(context);
           },
           orElse: () {},
@@ -32,9 +35,9 @@ class WeatherView extends ConsumerWidget {
         child: Column(
           children: [
             const Spacer(),
-            SizedBox(
-              width: deviceWidth / 2,
-              child: const WeatherForecastPanel(),
+            const FractionallySizedBox(
+              widthFactor: 0.5,
+              child: WeatherForecastPanel(),
             ),
             Expanded(
               child: Column(
@@ -42,8 +45,8 @@ class WeatherView extends ConsumerWidget {
                   const SizedBox(
                     height: 80,
                   ),
-                  SizedBox(
-                    width: deviceWidth / 2,
+                  FractionallySizedBox(
+                    widthFactor: 0.5,
                     child: Row(
                       children: [
                         Expanded(

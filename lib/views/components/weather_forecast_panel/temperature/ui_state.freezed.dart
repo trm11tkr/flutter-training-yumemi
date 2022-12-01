@@ -37,20 +37,20 @@ mixin _$TemperatureUiState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Data value) data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Data value)? data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Data value)? data,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -75,23 +75,24 @@ class _$TemperatureUiStateCopyWithImpl<$Res, $Val extends TemperatureUiState>
 }
 
 /// @nodoc
-abstract class _$$InitialCopyWith<$Res> {
-  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
-      __$$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialCopyWithImpl<$Res>
-    extends _$TemperatureUiStateCopyWithImpl<$Res, _$Initial>
-    implements _$$InitialCopyWith<$Res> {
-  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$TemperatureUiStateCopyWithImpl<$Res, _$_Initial>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Initial implements Initial {
-  const _$Initial();
+class _$_Initial implements _Initial {
+  const _$_Initial();
 
   @override
   String toString() {
@@ -101,7 +102,7 @@ class _$Initial implements Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -141,8 +142,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Data value) data,
   }) {
     return initial(this);
   }
@@ -150,8 +151,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Data value)? data,
   }) {
     return initial?.call(this);
   }
@@ -159,8 +160,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Data value)? data,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -170,23 +171,23 @@ class _$Initial implements Initial {
   }
 }
 
-abstract class Initial implements TemperatureUiState {
-  const factory Initial() = _$Initial;
+abstract class _Initial implements TemperatureUiState {
+  const factory _Initial() = _$_Initial;
 }
 
 /// @nodoc
-abstract class _$$DataCopyWith<$Res> {
-  factory _$$DataCopyWith(_$Data value, $Res Function(_$Data) then) =
-      __$$DataCopyWithImpl<$Res>;
+abstract class _$$_DataCopyWith<$Res> {
+  factory _$$_DataCopyWith(_$_Data value, $Res Function(_$_Data) then) =
+      __$$_DataCopyWithImpl<$Res>;
   @useResult
   $Res call({int temperature});
 }
 
 /// @nodoc
-class __$$DataCopyWithImpl<$Res>
-    extends _$TemperatureUiStateCopyWithImpl<$Res, _$Data>
-    implements _$$DataCopyWith<$Res> {
-  __$$DataCopyWithImpl(_$Data _value, $Res Function(_$Data) _then)
+class __$$_DataCopyWithImpl<$Res>
+    extends _$TemperatureUiStateCopyWithImpl<$Res, _$_Data>
+    implements _$$_DataCopyWith<$Res> {
+  __$$_DataCopyWithImpl(_$_Data _value, $Res Function(_$_Data) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -194,7 +195,7 @@ class __$$DataCopyWithImpl<$Res>
   $Res call({
     Object? temperature = null,
   }) {
-    return _then(_$Data(
+    return _then(_$_Data(
       null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
@@ -205,8 +206,8 @@ class __$$DataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Data implements Data {
-  const _$Data(this.temperature);
+class _$_Data implements _Data {
+  const _$_Data(this.temperature);
 
   @override
   final int temperature;
@@ -220,7 +221,7 @@ class _$Data implements Data {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Data &&
+            other is _$_Data &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature));
   }
@@ -231,8 +232,8 @@ class _$Data implements Data {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DataCopyWith<_$Data> get copyWith =>
-      __$$DataCopyWithImpl<_$Data>(this, _$identity);
+  _$$_DataCopyWith<_$_Data> get copyWith =>
+      __$$_DataCopyWithImpl<_$_Data>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -268,8 +269,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Data value) data,
   }) {
     return data(this);
   }
@@ -277,8 +278,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Data value)? data,
   }) {
     return data?.call(this);
   }
@@ -286,8 +287,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Data value)? data,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -297,10 +298,10 @@ class _$Data implements Data {
   }
 }
 
-abstract class Data implements TemperatureUiState {
-  const factory Data(final int temperature) = _$Data;
+abstract class _Data implements TemperatureUiState {
+  const factory _Data(final int temperature) = _$_Data;
 
   int get temperature;
   @JsonKey(ignore: true)
-  _$$DataCopyWith<_$Data> get copyWith => throw _privateConstructorUsedError;
+  _$$_DataCopyWith<_$_Data> get copyWith => throw _privateConstructorUsedError;
 }

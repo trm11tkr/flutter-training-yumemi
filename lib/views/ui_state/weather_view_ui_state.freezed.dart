@@ -19,44 +19,38 @@ mixin _$WeatherViewUiState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(WeatherResult weather) data,
-    required TResult Function(AppError error) error,
+    required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(WeatherResult weather)? data,
-    TResult? Function(AppError error)? error,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(WeatherResult weather)? data,
-    TResult Function(AppError error)? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
-    required TResult Function(Errors value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Errors value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
-    TResult? Function(Errors value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Errors value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
-    TResult Function(Errors value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Errors value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -81,23 +75,24 @@ class _$WeatherViewUiStateCopyWithImpl<$Res, $Val extends WeatherViewUiState>
 }
 
 /// @nodoc
-abstract class _$$InitialCopyWith<$Res> {
-  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
-      __$$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialCopyWithImpl<$Res>
-    extends _$WeatherViewUiStateCopyWithImpl<$Res, _$Initial>
-    implements _$$InitialCopyWith<$Res> {
-  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$WeatherViewUiStateCopyWithImpl<$Res, _$_Initial>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Initial implements Initial {
-  const _$Initial();
+class _$_Initial implements _Initial {
+  const _$_Initial();
 
   @override
   String toString() {
@@ -107,7 +102,7 @@ class _$Initial implements Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -117,8 +112,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(WeatherResult weather) data,
-    required TResult Function(AppError error) error,
+    required TResult Function(String message) error,
   }) {
     return initial();
   }
@@ -127,8 +121,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(WeatherResult weather)? data,
-    TResult? Function(AppError error)? error,
+    TResult? Function(String message)? error,
   }) {
     return initial?.call();
   }
@@ -137,8 +130,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(WeatherResult weather)? data,
-    TResult Function(AppError error)? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -150,9 +142,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
-    required TResult Function(Errors value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Errors value) error,
   }) {
     return initial(this);
   }
@@ -160,9 +151,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
-    TResult? Function(Errors value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Errors value)? error,
   }) {
     return initial?.call(this);
   }
@@ -170,9 +160,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
-    TResult Function(Errors value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Errors value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -182,245 +171,96 @@ class _$Initial implements Initial {
   }
 }
 
-abstract class Initial implements WeatherViewUiState {
-  const factory Initial() = _$Initial;
+abstract class _Initial implements WeatherViewUiState {
+  const factory _Initial() = _$_Initial;
 }
 
 /// @nodoc
-abstract class _$$DataCopyWith<$Res> {
-  factory _$$DataCopyWith(_$Data value, $Res Function(_$Data) then) =
-      __$$DataCopyWithImpl<$Res>;
+abstract class _$$_ErrorsCopyWith<$Res> {
+  factory _$$_ErrorsCopyWith(_$_Errors value, $Res Function(_$_Errors) then) =
+      __$$_ErrorsCopyWithImpl<$Res>;
   @useResult
-  $Res call({WeatherResult weather});
-
-  $WeatherResultCopyWith<$Res> get weather;
+  $Res call({String message});
 }
 
 /// @nodoc
-class __$$DataCopyWithImpl<$Res>
-    extends _$WeatherViewUiStateCopyWithImpl<$Res, _$Data>
-    implements _$$DataCopyWith<$Res> {
-  __$$DataCopyWithImpl(_$Data _value, $Res Function(_$Data) _then)
+class __$$_ErrorsCopyWithImpl<$Res>
+    extends _$WeatherViewUiStateCopyWithImpl<$Res, _$_Errors>
+    implements _$$_ErrorsCopyWith<$Res> {
+  __$$_ErrorsCopyWithImpl(_$_Errors _value, $Res Function(_$_Errors) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weather = null,
+    Object? message = null,
   }) {
-    return _then(_$Data(
-      null == weather
-          ? _value.weather
-          : weather // ignore: cast_nullable_to_non_nullable
-              as WeatherResult,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $WeatherResultCopyWith<$Res> get weather {
-    return $WeatherResultCopyWith<$Res>(_value.weather, (value) {
-      return _then(_value.copyWith(weather: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$Data implements Data {
-  const _$Data(this.weather);
-
-  @override
-  final WeatherResult weather;
-
-  @override
-  String toString() {
-    return 'WeatherViewUiState.data(weather: $weather)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$Data &&
-            (identical(other.weather, weather) || other.weather == weather));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, weather);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DataCopyWith<_$Data> get copyWith =>
-      __$$DataCopyWithImpl<_$Data>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(WeatherResult weather) data,
-    required TResult Function(AppError error) error,
-  }) {
-    return data(weather);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(WeatherResult weather)? data,
-    TResult? Function(AppError error)? error,
-  }) {
-    return data?.call(weather);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(WeatherResult weather)? data,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (data != null) {
-      return data(weather);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
-    required TResult Function(Errors value) error,
-  }) {
-    return data(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
-    TResult? Function(Errors value)? error,
-  }) {
-    return data?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
-    TResult Function(Errors value)? error,
-    required TResult orElse(),
-  }) {
-    if (data != null) {
-      return data(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Data implements WeatherViewUiState {
-  const factory Data(final WeatherResult weather) = _$Data;
-
-  WeatherResult get weather;
-  @JsonKey(ignore: true)
-  _$$DataCopyWith<_$Data> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ErrorsCopyWith<$Res> {
-  factory _$$ErrorsCopyWith(_$Errors value, $Res Function(_$Errors) then) =
-      __$$ErrorsCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AppError error});
-}
-
-/// @nodoc
-class __$$ErrorsCopyWithImpl<$Res>
-    extends _$WeatherViewUiStateCopyWithImpl<$Res, _$Errors>
-    implements _$$ErrorsCopyWith<$Res> {
-  __$$ErrorsCopyWithImpl(_$Errors _value, $Res Function(_$Errors) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$Errors(
-      null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as AppError,
+    return _then(_$_Errors(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$Errors implements Errors {
-  const _$Errors(this.error);
+class _$_Errors implements _Errors {
+  const _$_Errors(this.message);
 
   @override
-  final AppError error;
+  final String message;
 
   @override
   String toString() {
-    return 'WeatherViewUiState.error(error: $error)';
+    return 'WeatherViewUiState.error(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Errors &&
-            (identical(other.error, error) || other.error == error));
+            other is _$_Errors &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorsCopyWith<_$Errors> get copyWith =>
-      __$$ErrorsCopyWithImpl<_$Errors>(this, _$identity);
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
+      __$$_ErrorsCopyWithImpl<_$_Errors>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(WeatherResult weather) data,
-    required TResult Function(AppError error) error,
+    required TResult Function(String message) error,
   }) {
-    return error(this.error);
+    return error(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(WeatherResult weather)? data,
-    TResult? Function(AppError error)? error,
+    TResult? Function(String message)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(WeatherResult weather)? data,
-    TResult Function(AppError error)? error,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(message);
     }
     return orElse();
   }
@@ -428,9 +268,8 @@ class _$Errors implements Errors {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Data value) data,
-    required TResult Function(Errors value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Errors value) error,
   }) {
     return error(this);
   }
@@ -438,9 +277,8 @@ class _$Errors implements Errors {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Initial value)? initial,
-    TResult? Function(Data value)? data,
-    TResult? Function(Errors value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Errors value)? error,
   }) {
     return error?.call(this);
   }
@@ -448,9 +286,8 @@ class _$Errors implements Errors {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Data value)? data,
-    TResult Function(Errors value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Errors value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -460,11 +297,11 @@ class _$Errors implements Errors {
   }
 }
 
-abstract class Errors implements WeatherViewUiState {
-  const factory Errors(final AppError error) = _$Errors;
+abstract class _Errors implements WeatherViewUiState {
+  const factory _Errors(final String message) = _$_Errors;
 
-  AppError get error;
+  String get message;
   @JsonKey(ignore: true)
-  _$$ErrorsCopyWith<_$Errors> get copyWith =>
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
       throw _privateConstructorUsedError;
 }
