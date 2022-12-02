@@ -27,18 +27,15 @@ class FetchWeatherUseCase {
         _repository = repository,
         _request = request;
 
+  final Ref _ref;
   final WeatherRepository _repository;
-
   final WeatherRequest _request;
 
-  final Ref _ref;
-
   void fetchWeather() {
-    _repository
-        .getWeather(
+    final result = _repository.getWeather(
       request: _request,
-    )
-        .when(
+    );
+    result.when(
       success: (weather) {
         _ref.read(weatherImagePanelStateProvider.notifier).update(
               (state) => WeatherImagePanelUiState.data(
