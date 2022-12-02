@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_training/data/app_error.dart';
+import 'package:flutter_training/data/app_exception.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/views/constants/strings.dart';
@@ -41,16 +40,16 @@ class WeatherDataSource {
     } on YumemiWeatherError catch (error) {
       switch (error) {
         case YumemiWeatherError.invalidParameter:
-          throw const AppError.invalidParameter(
+          throw const AppException.invalidParameter(
             message: Strings.invalidParameterError,
           );
         case YumemiWeatherError.unknown:
-          throw const AppError.unknown(
+          throw const AppException.unknown(
             message: Strings.unknownError,
           );
       }
     } on Exception {
-      throw const AppError.other(
+      throw const AppException.other(
         message: Strings.otherError,
       );
     }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'app_error.dart';
+part of 'app_exception.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AppError {
+mixin _$AppException {
   String get message => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -63,22 +63,23 @@ mixin _$AppError {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AppErrorCopyWith<AppError> get copyWith =>
+  $AppExceptionCopyWith<AppException> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppErrorCopyWith<$Res> {
-  factory $AppErrorCopyWith(AppError value, $Res Function(AppError) then) =
-      _$AppErrorCopyWithImpl<$Res, AppError>;
+abstract class $AppExceptionCopyWith<$Res> {
+  factory $AppExceptionCopyWith(
+          AppException value, $Res Function(AppException) then) =
+      _$AppExceptionCopyWithImpl<$Res, AppException>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$AppErrorCopyWithImpl<$Res, $Val extends AppError>
-    implements $AppErrorCopyWith<$Res> {
-  _$AppErrorCopyWithImpl(this._value, this._then);
+class _$AppExceptionCopyWithImpl<$Res, $Val extends AppException>
+    implements $AppExceptionCopyWith<$Res> {
+  _$AppExceptionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -100,7 +101,8 @@ class _$AppErrorCopyWithImpl<$Res, $Val extends AppError>
 }
 
 /// @nodoc
-abstract class _$$_InvalidCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+abstract class _$$_InvalidCopyWith<$Res>
+    implements $AppExceptionCopyWith<$Res> {
   factory _$$_InvalidCopyWith(
           _$_Invalid value, $Res Function(_$_Invalid) then) =
       __$$_InvalidCopyWithImpl<$Res>;
@@ -111,7 +113,7 @@ abstract class _$$_InvalidCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InvalidCopyWithImpl<$Res>
-    extends _$AppErrorCopyWithImpl<$Res, _$_Invalid>
+    extends _$AppExceptionCopyWithImpl<$Res, _$_Invalid>
     implements _$$_InvalidCopyWith<$Res> {
   __$$_InvalidCopyWithImpl(_$_Invalid _value, $Res Function(_$_Invalid) _then)
       : super(_value, _then);
@@ -140,7 +142,7 @@ class _$_Invalid implements _Invalid {
 
   @override
   String toString() {
-    return 'AppError.invalidParameter(message: $message)';
+    return 'AppException.invalidParameter(message: $message)';
   }
 
   @override
@@ -229,7 +231,7 @@ class _$_Invalid implements _Invalid {
   }
 }
 
-abstract class _Invalid implements AppError {
+abstract class _Invalid implements AppException {
   const factory _Invalid({required final String message}) = _$_Invalid;
 
   @override
@@ -241,7 +243,8 @@ abstract class _Invalid implements AppError {
 }
 
 /// @nodoc
-abstract class _$$_UnknownCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+abstract class _$$_UnknownCopyWith<$Res>
+    implements $AppExceptionCopyWith<$Res> {
   factory _$$_UnknownCopyWith(
           _$_Unknown value, $Res Function(_$_Unknown) then) =
       __$$_UnknownCopyWithImpl<$Res>;
@@ -252,7 +255,7 @@ abstract class _$$_UnknownCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UnknownCopyWithImpl<$Res>
-    extends _$AppErrorCopyWithImpl<$Res, _$_Unknown>
+    extends _$AppExceptionCopyWithImpl<$Res, _$_Unknown>
     implements _$$_UnknownCopyWith<$Res> {
   __$$_UnknownCopyWithImpl(_$_Unknown _value, $Res Function(_$_Unknown) _then)
       : super(_value, _then);
@@ -281,7 +284,7 @@ class _$_Unknown implements _Unknown {
 
   @override
   String toString() {
-    return 'AppError.unknown(message: $message)';
+    return 'AppException.unknown(message: $message)';
   }
 
   @override
@@ -370,7 +373,7 @@ class _$_Unknown implements _Unknown {
   }
 }
 
-abstract class _Unknown implements AppError {
+abstract class _Unknown implements AppException {
   const factory _Unknown({required final String message}) = _$_Unknown;
 
   @override
@@ -382,7 +385,7 @@ abstract class _Unknown implements AppError {
 }
 
 /// @nodoc
-abstract class _$$_OthersCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+abstract class _$$_OthersCopyWith<$Res> implements $AppExceptionCopyWith<$Res> {
   factory _$$_OthersCopyWith(_$_Others value, $Res Function(_$_Others) then) =
       __$$_OthersCopyWithImpl<$Res>;
   @override
@@ -392,7 +395,7 @@ abstract class _$$_OthersCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_OthersCopyWithImpl<$Res>
-    extends _$AppErrorCopyWithImpl<$Res, _$_Others>
+    extends _$AppExceptionCopyWithImpl<$Res, _$_Others>
     implements _$$_OthersCopyWith<$Res> {
   __$$_OthersCopyWithImpl(_$_Others _value, $Res Function(_$_Others) _then)
       : super(_value, _then);
@@ -421,7 +424,7 @@ class _$_Others implements _Others {
 
   @override
   String toString() {
-    return 'AppError.other(message: $message)';
+    return 'AppException.other(message: $message)';
   }
 
   @override
@@ -510,7 +513,7 @@ class _$_Others implements _Others {
   }
 }
 
-abstract class _Others implements AppError {
+abstract class _Others implements AppException {
   const factory _Others({required final String message}) = _$_Others;
 
   @override

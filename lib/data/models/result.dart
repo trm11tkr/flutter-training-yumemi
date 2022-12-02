@@ -1,4 +1,4 @@
-import 'package:flutter_training/data/app_error.dart';
+import 'package:flutter_training/data/app_exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'result.freezed.dart';
@@ -14,7 +14,7 @@ class Result<T> with _$Result<T> {
       return Result.success(
         data: body(),
       );
-    } on AppError catch (error) {
+    } on AppException catch (error) {
       return Result.failure(
         message: error.message,
       );
