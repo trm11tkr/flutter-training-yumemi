@@ -63,7 +63,7 @@ class WeatherView extends ConsumerWidget {
                               onPressed: () {
                                 ref
                                     .read(fetchWeatherUseCaseProvider)
-                                    .fetchWeather();
+                                    .call();
                               },
                               child: const Text('Reload'),
                             ),

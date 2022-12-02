@@ -31,7 +31,7 @@ class FetchWeatherUseCase {
   final WeatherRepository _repository;
   final WeatherRequest _request;
 
-  void fetchWeather() {
+  void call() {
     final result = _repository.getWeather(
       request: _request,
     );
