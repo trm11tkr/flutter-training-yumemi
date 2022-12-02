@@ -1,21 +1,24 @@
 import 'dart:convert';
 
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/data/app_error.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/views/constants/strings.dart';
+import 'package:meta/meta.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 final weatherDataSourceProvider = Provider<WeatherDataSource>((_) {
   final client = YumemiWeather();
-  return WeatherDataSource._(
+  return WeatherDataSource(
     client,
   );
 });
 
 class WeatherDataSource {
-  const WeatherDataSource._(
+  @visibleForTesting
+  const WeatherDataSource(
     this._client,
   );
 

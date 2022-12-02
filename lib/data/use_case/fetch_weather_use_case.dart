@@ -4,12 +4,13 @@ import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/views/components/weather_forecast_panel/temperature/ui_state.dart';
 import 'package:flutter_training/views/components/weather_forecast_panel/weather_image_panel/ui_state.dart';
 import 'package:flutter_training/views/ui_state/weather_view_ui_state.dart';
+import 'package:meta/meta.dart';
 
 final fetchWeatherUseCaseProvider = Provider<FetchWeatherUseCase>((ref) {
   final repository = ref.watch(weatherRepositoryProvider);
   final request = ref.watch(weatherRequestStateProvider);
 
-  return FetchWeatherUseCase._(
+  return FetchWeatherUseCase(
     ref: ref,
     repository: repository,
     request: request,
@@ -17,7 +18,8 @@ final fetchWeatherUseCaseProvider = Provider<FetchWeatherUseCase>((ref) {
 });
 
 class FetchWeatherUseCase {
-  FetchWeatherUseCase._({
+  @visibleForTesting
+  FetchWeatherUseCase({
     required Ref ref,
     required WeatherRepository repository,
     required WeatherRequest request,
