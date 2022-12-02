@@ -37,10 +37,12 @@ void main() {
                     }
                    ''',
           );
+          final actual = dataSource.getWeather(request: defaultRequest);
+          final expected = isA<Weather>();
 
           expect(
-            dataSource.getWeather(request: defaultRequest),
-            isA<Weather>(),
+            actual,
+            expected,
           );
         },
       );
@@ -59,15 +61,15 @@ void main() {
           );
 
           Object act;
-          const expected = AppException.unknown(
-            message: Strings.unknownError,
-          );
-
           try {
             act = dataSource.getWeather(request: defaultRequest);
           } on AppException catch (error) {
             act = error;
           }
+
+          const expected = AppException.unknown(
+            message: Strings.unknownError,
+          );
 
           expect(
             act,
@@ -81,16 +83,17 @@ void main() {
         () {
           final dataSource = WeatherDataSource(YumemiWeather());
           const invalidedRequest = WeatherRequest(date: 'invalid Parameter');
-          Object act;
-          const expected = AppException.invalidParameter(
-            message: Strings.invalidParameterError,
-          );
 
+          Object act;
           try {
             act = dataSource.getWeather(request: invalidedRequest);
           } on AppException catch (error) {
             act = error;
           }
+
+          const expected = AppException.invalidParameter(
+            message: Strings.invalidParameterError,
+          );
 
           expect(
             act,
