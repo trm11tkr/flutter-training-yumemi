@@ -7,5 +7,8 @@ class AppException with _$AppException implements Exception {
   const factory AppException.invalidParameter({required String message}) =
       _Invalid;
   const factory AppException.unknown({required String message}) = _Unknown;
-  const factory AppException.other({required String message}) = _Others;
+  const factory AppException.other({
+    required String message,
+    required StackTrace stackTrace,
+  }) = _Others;
 }

@@ -21,21 +21,21 @@ mixin _$AppException {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) invalidParameter,
     required TResult Function(String message) unknown,
-    required TResult Function(String message) other,
+    required TResult Function(String message, StackTrace stackTrace) other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? invalidParameter,
     TResult? Function(String message)? unknown,
-    TResult? Function(String message)? other,
+    TResult? Function(String message, StackTrace stackTrace)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? invalidParameter,
     TResult Function(String message)? unknown,
-    TResult Function(String message)? other,
+    TResult Function(String message, StackTrace stackTrace)? other,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -167,7 +167,7 @@ class _$_Invalid implements _Invalid {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) invalidParameter,
     required TResult Function(String message) unknown,
-    required TResult Function(String message) other,
+    required TResult Function(String message, StackTrace stackTrace) other,
   }) {
     return invalidParameter(message);
   }
@@ -177,7 +177,7 @@ class _$_Invalid implements _Invalid {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? invalidParameter,
     TResult? Function(String message)? unknown,
-    TResult? Function(String message)? other,
+    TResult? Function(String message, StackTrace stackTrace)? other,
   }) {
     return invalidParameter?.call(message);
   }
@@ -187,7 +187,7 @@ class _$_Invalid implements _Invalid {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? invalidParameter,
     TResult Function(String message)? unknown,
-    TResult Function(String message)? other,
+    TResult Function(String message, StackTrace stackTrace)? other,
     required TResult orElse(),
   }) {
     if (invalidParameter != null) {
@@ -309,7 +309,7 @@ class _$_Unknown implements _Unknown {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) invalidParameter,
     required TResult Function(String message) unknown,
-    required TResult Function(String message) other,
+    required TResult Function(String message, StackTrace stackTrace) other,
   }) {
     return unknown(message);
   }
@@ -319,7 +319,7 @@ class _$_Unknown implements _Unknown {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? invalidParameter,
     TResult? Function(String message)? unknown,
-    TResult? Function(String message)? other,
+    TResult? Function(String message, StackTrace stackTrace)? other,
   }) {
     return unknown?.call(message);
   }
@@ -329,7 +329,7 @@ class _$_Unknown implements _Unknown {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? invalidParameter,
     TResult Function(String message)? unknown,
-    TResult Function(String message)? other,
+    TResult Function(String message, StackTrace stackTrace)? other,
     required TResult orElse(),
   }) {
     if (unknown != null) {
@@ -390,7 +390,7 @@ abstract class _$$_OthersCopyWith<$Res> implements $AppExceptionCopyWith<$Res> {
       __$$_OthersCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message});
+  $Res call({String message, StackTrace stackTrace});
 }
 
 /// @nodoc
@@ -404,12 +404,17 @@ class __$$_OthersCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = null,
+    Object? stackTrace = null,
   }) {
     return _then(_$_Others(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      stackTrace: null == stackTrace
+          ? _value.stackTrace
+          : stackTrace // ignore: cast_nullable_to_non_nullable
+              as StackTrace,
     ));
   }
 }
@@ -417,14 +422,16 @@ class __$$_OthersCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Others implements _Others {
-  const _$_Others({required this.message});
+  const _$_Others({required this.message, required this.stackTrace});
 
   @override
   final String message;
+  @override
+  final StackTrace stackTrace;
 
   @override
   String toString() {
-    return 'AppException.other(message: $message)';
+    return 'AppException.other(message: $message, stackTrace: $stackTrace)';
   }
 
   @override
@@ -432,11 +439,13 @@ class _$_Others implements _Others {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Others &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, message, stackTrace);
 
   @JsonKey(ignore: true)
   @override
@@ -449,9 +458,9 @@ class _$_Others implements _Others {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) invalidParameter,
     required TResult Function(String message) unknown,
-    required TResult Function(String message) other,
+    required TResult Function(String message, StackTrace stackTrace) other,
   }) {
-    return other(message);
+    return other(message, stackTrace);
   }
 
   @override
@@ -459,9 +468,9 @@ class _$_Others implements _Others {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? invalidParameter,
     TResult? Function(String message)? unknown,
-    TResult? Function(String message)? other,
+    TResult? Function(String message, StackTrace stackTrace)? other,
   }) {
-    return other?.call(message);
+    return other?.call(message, stackTrace);
   }
 
   @override
@@ -469,11 +478,11 @@ class _$_Others implements _Others {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? invalidParameter,
     TResult Function(String message)? unknown,
-    TResult Function(String message)? other,
+    TResult Function(String message, StackTrace stackTrace)? other,
     required TResult orElse(),
   }) {
     if (other != null) {
-      return other(message);
+      return other(message, stackTrace);
     }
     return orElse();
   }
@@ -514,10 +523,13 @@ class _$_Others implements _Others {
 }
 
 abstract class _Others implements AppException {
-  const factory _Others({required final String message}) = _$_Others;
+  const factory _Others(
+      {required final String message,
+      required final StackTrace stackTrace}) = _$_Others;
 
   @override
   String get message;
+  StackTrace get stackTrace;
   @override
   @JsonKey(ignore: true)
   _$$_OthersCopyWith<_$_Others> get copyWith =>

@@ -48,9 +48,10 @@ class WeatherDataSource {
             message: Strings.unknownError,
           );
       }
-    } on Exception {
-      throw const AppException.other(
-        message: Strings.otherError,
+    } on Exception catch (error, stackTrace) {
+      throw AppException.other(
+        message: error.toString(),
+        stackTrace: stackTrace,
       );
     }
   }
