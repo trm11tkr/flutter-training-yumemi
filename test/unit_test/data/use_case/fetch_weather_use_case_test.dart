@@ -22,191 +22,215 @@ void main() {
   const defaultRequest = WeatherRequest();
   final json = defaultRequest.toJson();
   final jsonString = jsonEncode(json);
-  group('call of FetchWeatherUseCase', () {
-    test('fetchWeather 成功時: WeatherViewUiState以外の状態を更新', () {
-      final client = MockYumemiWeather();
+  group(
+    'call of FetchWeatherUseCase',
+    () {
+      test(
+        '''
+        On success of fetchWeather,
+        update status other than WeatherViewUiState
+        ''',
+        () {
+          final client = MockYumemiWeather();
 
-      when(
-        client.fetchWeather(jsonString),
-      ).thenAnswer(
-        (_) => '''
+          when(
+            client.fetchWeather(jsonString),
+          ).thenAnswer(
+            (_) => '''
                     {
                       "weather_condition":"cloudy",
                       "max_temperature":25,"min_temperature":7,
                       "date":"2020-04-01T12:00:00+09:00"
                     }
                    ''',
+          );
+
+          final dataStore = WeatherDataSource(client);
+          final repository = WeatherRepository(dataStore);
+          final container = ProviderContainer(
+            overrides: [
+              fetchWeatherUseCaseProvider.overrideWith(
+                (ref) => FetchWeatherUseCase(
+                  ref: ref,
+                  repository: repository,
+                  request: defaultRequest,
+                ),
+              )
+            ],
+          );
+
+          final fetchWeatherUseCase =
+              container.read(fetchWeatherUseCaseProvider);
+
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.initial(),
+          );
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.initial(),
+          );
+
+          fetchWeatherUseCase.call();
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.initial(),
+          );
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.data(7),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.data(25),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
+          );
+        },
       );
 
-      final dataStore = WeatherDataSource(client);
-      final repository = WeatherRepository(dataStore);
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
-              ref: ref,
-              repository: repository,
-              request: defaultRequest,
-            ),
-          )
-        ],
+      test(
+        '''
+        When an exception occurs in fetchWeather,
+        update only WeatherViewUiState to Error.
+        ''',
+        () {
+          final client = MockYumemiWeather();
+
+          when(
+            client.fetchWeather(jsonString),
+          ).thenAnswer(
+            // ignore: only_throw_errors
+            (_) => throw YumemiWeatherError.unknown,
+          );
+
+          final dataStore = WeatherDataSource(client);
+          final repository = WeatherRepository(dataStore);
+          final container = ProviderContainer(
+            overrides: [
+              fetchWeatherUseCaseProvider.overrideWith(
+                (ref) => FetchWeatherUseCase(
+                  ref: ref,
+                  repository: repository,
+                  request: defaultRequest,
+                ),
+              )
+            ],
+          );
+
+          final fetchWeatherUseCase =
+              container.read(fetchWeatherUseCaseProvider);
+
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.initial(),
+          );
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.initial(),
+          );
+
+          fetchWeatherUseCase.call();
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.error(Strings.unknownError),
+          );
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.initial(),
+          );
+        },
       );
 
-      final fetchWeatherUseCase = container.read(fetchWeatherUseCaseProvider);
+      test(
+        '''
+        When parameter is invalid,
+        update only WeatherViewUiState to Error.
+        ''',
+        () {
+          final dataStore = WeatherDataSource(YumemiWeather());
+          final repository = WeatherRepository(dataStore);
+          const request = WeatherRequest(date: 'invalid Parameter');
+          final container = ProviderContainer(
+            overrides: [
+              fetchWeatherUseCaseProvider.overrideWith(
+                (ref) => FetchWeatherUseCase(
+                  ref: ref,
+                  repository: repository,
+                  request: request,
+                ),
+              )
+            ],
+          );
 
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.initial(),
-      );
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.initial(),
-      );
+          final fetchWeatherUseCase =
+              container.read(fetchWeatherUseCaseProvider);
 
-      fetchWeatherUseCase.call();
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.initial(),
-      );
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.data(7),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.data(25),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
-      );
-    });
+          // 初期状態
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.initial(),
+          );
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.initial(),
+          );
 
-    test('fetchWeather 失敗時: パラメータ無効時: WeatherViewUiStateのみエラーに更新', () {
-      final client = MockYumemiWeather();
-
-      when(
-        client.fetchWeather(jsonString),
-      ).thenAnswer(
-        // ignore: only_throw_errors
-        (_) => throw YumemiWeatherError.unknown,
+          // 画面・天気状態を更新
+          fetchWeatherUseCase.call();
+          expect(
+            container.read(weatherViewUiStateProvider),
+            const WeatherViewUiState.error(Strings.invalidParameterError),
+          );
+          // エラー発生時は天気状態は更新されない
+          expect(
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(maxTemperatureUiStateProvider),
+            const TemperatureUiState.initial(),
+          );
+          expect(
+            container.read(weatherImagePanelStateProvider),
+            const WeatherImagePanelUiState.initial(),
+          );
+        },
       );
-
-      final dataStore = WeatherDataSource(client);
-      final repository = WeatherRepository(dataStore);
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
-              ref: ref,
-              repository: repository,
-              request: defaultRequest,
-            ),
-          )
-        ],
-      );
-
-      final fetchWeatherUseCase = container.read(fetchWeatherUseCaseProvider);
-
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.initial(),
-      );
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.initial(),
-      );
-
-      fetchWeatherUseCase.call();
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.error(Strings.unknownError),
-      );
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.initial(),
-      );
-    });
-
-    test('パラメータ無効時: WeatherViewUiStateのみエラーに更新', () {
-      final dataStore = WeatherDataSource(YumemiWeather());
-      final repository = WeatherRepository(dataStore);
-      const request = WeatherRequest(date: 'invalid Parameter');
-      final container = ProviderContainer(
-        overrides: [
-          fetchWeatherUseCaseProvider.overrideWith(
-            (ref) => FetchWeatherUseCase(
-              ref: ref,
-              repository: repository,
-              request: request,
-            ),
-          )
-        ],
-      );
-
-      final fetchWeatherUseCase = container.read(fetchWeatherUseCaseProvider);
-
-      // 初期状態
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.initial(),
-      );
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.initial(),
-      );
-
-      // 画面・天気状態を更新
-      fetchWeatherUseCase.call();
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.error(Strings.invalidParameterError),
-      );
-      // エラー発生時は天気状態は更新されない
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.initial(),
-      );
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.initial(),
-      );
-    });
-  });
+    },
+  );
 }

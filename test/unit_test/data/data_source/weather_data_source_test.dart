@@ -21,7 +21,10 @@ void main() {
     'getWeather',
     () {
       test(
-        'fetchWeather が成功すると Weather を返す',
+           '''
+           On success of fetchWeather:
+           return Type of Weather
+           ''',
         () {
           final client = MockYumemiWeather();
           final dataSource = WeatherDataSource(client);
@@ -48,7 +51,10 @@ void main() {
       );
 
       test(
-        'fetchWeatherが 例外を発生させると YumemiWeatherError.unknown を返し、AppErrorに変換する',
+        '''
+        When an exception occurs in fetchWeather:
+        return AppException.unknownError.
+        ''',
         () {
           final client = MockYumemiWeather();
           final dataSource = WeatherDataSource(client);
@@ -79,7 +85,10 @@ void main() {
       );
 
       test(
-        'パラメータが無効な場合、 YumemiWeatherError.invalidParameter を返し、AppErrorに変換する',
+        '''
+        When parameter is invalid,
+        return AppException.invalidParameter.
+        ''',
         () {
           final dataSource = WeatherDataSource(YumemiWeather());
           const invalidedRequest = WeatherRequest(date: 'invalid Parameter');

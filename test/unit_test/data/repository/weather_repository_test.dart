@@ -23,7 +23,10 @@ void main() {
     'getWeather of WeatherRepository',
     () {
       test(
-        'fetchWeather が成功すると AppApiResult<Weather> を返す',
+           '''
+           On success of fetchWeather:
+           return AppApiResult<Weather>.
+           ''',
         () {
           final client = MockYumemiWeather();
           final dataSource = WeatherDataSource(client);
@@ -53,7 +56,8 @@ void main() {
 
       test(
         '''
-        fetchWeather が例外を発生させると AppApiResult.failure(message:Strings.unknown)を返す
+        When an exception occurs in fetchWeather:
+        return AppApiResult<Weather>.failure(message: Strings.unknownError).
         ''',
         () {
           final client = MockYumemiWeather();
@@ -87,7 +91,8 @@ void main() {
 
       test(
         '''
-        パラメータが無効な場合、 AppApiResult.failure(message:Strings.invalidParameterError)を返す
+        When parameter is invalid,
+        return AppApiResult.failure(message:Strings.invalidParameterError).
         ''',
         () {
           final dataSource = WeatherDataSource(YumemiWeather());
