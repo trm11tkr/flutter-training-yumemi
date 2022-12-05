@@ -33,7 +33,7 @@ YumemiWeather APIの実行ボタンのUIなどを提供。
 
 - Repository
 
-  - DataSourceをResultクラスに変換。
+  - DataSourceを呼び出し、その結果をAppApiResultクラスに変換。
 
 - DataSource
 
@@ -58,15 +58,15 @@ YumemiWeather APIの実行ボタンのUIなどを提供。
 ### 取得失敗時
 - WeatherViewUiStateを「エラー状態」に更新。
 ## Repository
-- DataSourceをResultクラスに変換。
+- DataSourceを呼び出し、その結果をAppApiResultクラスに変換。
 
 ## DataSource
 - Weatherを取得するロジックを提供。
 - YumemiWeatherErrorのハンドリング。
 - API通信を実行する。
-- YumemiWeatherErrorをアプリ内エラークラス（AppError）に変換。
+- YumemiWeatherErrorをアプリ内エラークラス（AppException）に変換。
 
-## Riverpodの依存関係
+## Providerの依存関係
 ```mermaid
 flowchart TB
     subgraph riverpod
