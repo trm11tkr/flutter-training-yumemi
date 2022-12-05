@@ -7,6 +7,7 @@ import 'package:flutter_training/views/constants/strings.dart';
 class ErrorDialog extends AlertDialogModel<void> {
   const ErrorDialog({
     required super.title,
+    super.onWillPop,
   }) : super(
           buttons: const {
             Strings.ok: true,
