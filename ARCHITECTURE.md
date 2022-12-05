@@ -69,11 +69,11 @@ YumemiWeather APIの実行ボタンのUIなどを提供。
 ## Providerの依存関係
 ```mermaid
 flowchart TB
-    subgraph riverpod
+    subgraph provider
         direction TB
-        style riverpod fill:transparent;
-        style riverpod stroke: none;
-        style riverpod color:transparent;
+        style provider fill:transparent;
+        style provider stroke: none;
+        style provider color:transparent;
         WeatherView((WeatherView));
         weatherViewUiStateProvider --> WeatherView;
         fetchWeatherUseCaseProvider -.-> WeatherView;
