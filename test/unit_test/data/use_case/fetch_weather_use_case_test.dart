@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_training/data/data_source/weather_data_source.dart';
+import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
@@ -13,17 +11,16 @@ import 'package:flutter_training/views/constants/strings.dart';
 import 'package:flutter_training/views/ui_state/weather_view_ui_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:yumemi_weather/yumemi_weather.dart';
 
 import 'fetch_weather_use_case_test.mocks.dart';
 
-@GenerateMocks([YumemiWeather])
+@GenerateMocks([WeatherRepository])
 void main() {
   const defaultRequest = WeatherRequest();
-  final json = defaultRequest.toJson();
-  final jsonString = jsonEncode(json);
+  final client = MockWeatherRepository();
+
   group(
-    'call of FetchWeatherUseCase',
+    'call method of FetchWeatherUseCase',
     () {
       test(
         '''
@@ -31,34 +28,32 @@ void main() {
         update status other than WeatherViewUiState
         ''',
         () {
-          final client = MockYumemiWeather();
-
           when(
-            client.fetchWeather(jsonString),
+            client.getWeather(request: defaultRequest),
           ).thenAnswer(
-            (_) => '''
-                    {
-                      "weather_condition":"cloudy",
-                      "max_temperature":25,"min_temperature":7,
-                      "date":"2020-04-01T12:00:00+09:00"
-                    }
-                   ''',
+            (_) => AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.cloudy,
+                maxTemperature: 25,
+                minTemperature: 7,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
           );
 
-          final dataStore = WeatherDataSource(client);
-          final repository = WeatherRepository(dataStore);
           final container = ProviderContainer(
             overrides: [
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: repository,
+                  repository: client,
                   request: defaultRequest,
                 ),
               )
             ],
           );
 
+          // init status
           final fetchWeatherUseCase =
               container.read(fetchWeatherUseCaseProvider);
 
@@ -80,6 +75,7 @@ void main() {
           );
 
           fetchWeatherUseCase.call();
+          // called api and reflect each state
           expect(
             container.read(weatherViewUiStateProvider),
             const WeatherViewUiState.initial(),
@@ -105,23 +101,19 @@ void main() {
         update only WeatherViewUiState to Error.
         ''',
         () {
-          final client = MockYumemiWeather();
-
           when(
-            client.fetchWeather(jsonString),
+            client.getWeather(request: defaultRequest),
           ).thenAnswer(
-            // ignore: only_throw_errors
-            (_) => throw YumemiWeatherError.unknown,
+            (_) => const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
           );
-
-          final dataStore = WeatherDataSource(client);
-          final repository = WeatherRepository(dataStore);
           final container = ProviderContainer(
             overrides: [
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: repository,
+                  repository: client,
                   request: defaultRequest,
                 ),
               )
@@ -131,6 +123,7 @@ void main() {
           final fetchWeatherUseCase =
               container.read(fetchWeatherUseCaseProvider);
 
+          // init status
           expect(
             container.read(weatherViewUiStateProvider),
             const WeatherViewUiState.initial(),
@@ -149,6 +142,7 @@ void main() {
           );
 
           fetchWeatherUseCase.call();
+          // called api and reflect each state
           expect(
             container.read(weatherViewUiStateProvider),
             const WeatherViewUiState.error(Strings.unknownError),
@@ -174,21 +168,26 @@ void main() {
         update only WeatherViewUiState to Error.
         ''',
         () {
-          final dataStore = WeatherDataSource(YumemiWeather());
-          final repository = WeatherRepository(dataStore);
-          const request = WeatherRequest(date: 'invalid Parameter');
+          when(
+            client.getWeather(request: defaultRequest),
+          ).thenAnswer(
+            (_) => const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
           final container = ProviderContainer(
             overrides: [
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: repository,
-                  request: request,
+                  repository: client,
+                  request: defaultRequest,
                 ),
               )
             ],
           );
 
+          // init status
           final fetchWeatherUseCase =
               container.read(fetchWeatherUseCaseProvider);
 
@@ -210,13 +209,12 @@ void main() {
             const WeatherImagePanelUiState.initial(),
           );
 
-          // 画面・天気状態を更新
           fetchWeatherUseCase.call();
+          // called api and reflect each state
           expect(
             container.read(weatherViewUiStateProvider),
             const WeatherViewUiState.error(Strings.invalidParameterError),
           );
-          // エラー発生時は天気状態は更新されない
           expect(
             container.read(minTemperatureUiStateProvider),
             const TemperatureUiState.initial(),
