@@ -3,8 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter_training/data/data_source/weather_data_source.dart'
+    as _i3;
+import 'package:flutter_training/data/models/weather/weather.dart' as _i2;
+import 'package:flutter_training/data/models/weather/weather_request.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:yumemi_weather/src/yumemi_weather_base.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -17,44 +21,39 @@ import 'package:yumemi_weather/src/yumemi_weather_base.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [YumemiWeather].
+class _FakeWeather_0 extends _i1.SmartFake implements _i2.Weather {
+  _FakeWeather_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [WeatherDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockYumemiWeather extends _i1.Mock implements _i2.YumemiWeather {
-  MockYumemiWeather() {
+class MockWeatherDataSource extends _i1.Mock implements _i3.WeatherDataSource {
+  MockWeatherDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  String fetchSimpleWeather() => (super.noSuchMethod(
+  _i2.Weather getWeather({required _i4.WeatherRequest? request}) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #fetchSimpleWeather,
+          #getWeather,
           [],
+          {#request: request},
         ),
-        returnValue: '',
-      ) as String);
-  @override
-  String fetchThrowsWeather(String? area) => (super.noSuchMethod(
-        Invocation.method(
-          #fetchThrowsWeather,
-          [area],
+        returnValue: _FakeWeather_0(
+          this,
+          Invocation.method(
+            #getWeather,
+            [],
+            {#request: request},
+          ),
         ),
-        returnValue: '',
-      ) as String);
-  @override
-  String fetchWeather(String? jsonString) => (super.noSuchMethod(
-        Invocation.method(
-          #fetchWeather,
-          [jsonString],
-        ),
-        returnValue: '',
-      ) as String);
-  @override
-  String syncFetchWeather(String? jsonString) => (super.noSuchMethod(
-        Invocation.method(
-          #syncFetchWeather,
-          [jsonString],
-        ),
-        returnValue: '',
-      ) as String);
+      ) as _i2.Weather);
 }
