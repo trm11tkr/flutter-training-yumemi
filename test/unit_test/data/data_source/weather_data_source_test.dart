@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/app_exception.dart';
@@ -15,22 +15,19 @@ import 'weather_data_source_test.mocks.dart';
 @GenerateMocks([YumemiWeather])
 void main() {
   const defaultRequest = WeatherRequest();
-  final json = defaultRequest.toJson();
-  final jsonString = jsonEncode(json);
+  final client = MockYumemiWeather();
+  final dataSource = WeatherDataSource(client);
   group(
     'getWeather',
     () {
       test(
-           '''
+        '''
            On success of fetchWeather:
            return Type of Weather
            ''',
         () {
-          final client = MockYumemiWeather();
-          final dataSource = WeatherDataSource(client);
-
           when(
-            client.fetchWeather(jsonString),
+            client.fetchWeather(any),
           ).thenAnswer(
             (_) => '''
                     {
@@ -40,11 +37,11 @@ void main() {
                     }
                    ''',
           );
-          final actual = dataSource.getWeather(request: defaultRequest);
+          final act = dataSource.getWeather(request: defaultRequest);
           final expected = isA<Weather>();
 
           expect(
-            actual,
+            act,
             expected,
           );
         },
@@ -56,25 +53,20 @@ void main() {
         return AppException.unknownError.
         ''',
         () {
-          final client = MockYumemiWeather();
-          final dataSource = WeatherDataSource(client);
-
           when(
-            client.fetchWeather(jsonString),
+            client.fetchWeather(any),
           ).thenAnswer(
             // ignore: only_throw_errors
             (_) => throw YumemiWeatherError.unknown,
           );
+          final act = () {
+            dataSource.getWeather(request: defaultRequest);
+          };
 
-          Object act;
-          try {
-            act = dataSource.getWeather(request: defaultRequest);
-          } on AppException catch (error) {
-            act = error;
-          }
-
-          const expected = AppException.unknown(
-            message: Strings.unknownError,
+          final expected = throwsA(
+            const AppException.unknown(
+              message: Strings.unknownError,
+            ),
           );
 
           expect(
@@ -90,18 +82,21 @@ void main() {
         return AppException.invalidParameter.
         ''',
         () {
-          final dataSource = WeatherDataSource(YumemiWeather());
-          const invalidedRequest = WeatherRequest(date: 'invalid Parameter');
+          when(
+            client.fetchWeather(any),
+          ).thenAnswer(
+            // ignore: only_throw_errors
+            (_) => throw YumemiWeatherError.invalidParameter,
+          );
 
-          Object act;
-          try {
-            act = dataSource.getWeather(request: invalidedRequest);
-          } on AppException catch (error) {
-            act = error;
-          }
+          final act = () {
+            dataSource.getWeather(request: defaultRequest);
+          };
 
-          const expected = AppException.invalidParameter(
-            message: Strings.invalidParameterError,
+          final expected = throwsA(
+            const AppException.invalidParameter(
+              message: Strings.invalidParameterError,
+            ),
           );
 
           expect(
