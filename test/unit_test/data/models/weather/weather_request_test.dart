@@ -10,10 +10,13 @@ void main() {
         () {
           const weatherRequest = WeatherRequest();
 
-          final weatherJson = weatherRequest.toJson();
+          final act = weatherRequest.toJson();
+          final expected = {
+            'area': 'tokyo',
+            'date': '2020-04-01T12:00:00+09:00'
+          };
 
-          expect(weatherJson['area'], 'tokyo');
-          expect(weatherJson['date'], '2020-04-01T12:00:00+09:00');
+          expect(act, expected);
         },
       );
 
@@ -25,10 +28,13 @@ void main() {
             date: '2023-12-01T12:00:00+02:00',
           );
 
-          final weatherJson = weatherRequest.toJson();
+          final act = weatherRequest.toJson();
+          final expected = {
+            'area': 'kyoto',
+            'date': '2023-12-01T12:00:00+02:00'
+          };
 
-          expect(weatherJson['area'], 'kyoto');
-          expect(weatherJson['date'], '2023-12-01T12:00:00+02:00');
+          expect(act, expected);
         },
       );
     },

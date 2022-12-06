@@ -15,12 +15,14 @@ void main() {
     'fromJson of Weather',
     () {
       final json = jsonDecode(weatherData) as Map<String, dynamic>;
-      final weather = Weather.fromJson(json);
-
-      expect(weather.weatherCondition, WeatherCondition.cloudy);
-      expect(weather.maxTemperature, 25);
-      expect(weather.minTemperature, 7);
-      expect(weather.date, DateTime.parse('2020-04-01T12:00:00+09:00'));
+      final act = Weather.fromJson(json);
+      final expected = Weather(
+        weatherCondition: WeatherCondition.cloudy,
+        maxTemperature: 25,
+        minTemperature: 7,
+        date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+      );
+      expect(act, expected);
     },
   );
 }
