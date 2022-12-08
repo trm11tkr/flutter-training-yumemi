@@ -50,7 +50,7 @@ void main() {
       test(
         '''
         When an exception occurs in fetchWeather:
-        return AppException.unknownError.
+        throw AppException.unknownError.
         ''',
         () {
           when(
@@ -78,7 +78,7 @@ void main() {
       test(
         '''
         When parameter is invalid,
-        return AppException.invalidParameter.
+        throw AppException.invalidParameter.
         ''',
         () {
           when(
