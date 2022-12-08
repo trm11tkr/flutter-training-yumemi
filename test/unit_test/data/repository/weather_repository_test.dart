@@ -27,8 +27,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => Weather(
+          ).thenReturn(
+            Weather(
               weatherCondition: WeatherCondition.cloudy,
               maxTemperature: 25,
               minTemperature: 7,
@@ -53,8 +53,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => throw const AppException.unknown(
+          ).thenThrow(
+            const AppException.unknown(
               message: Strings.unknownError,
             ),
           );
@@ -78,8 +78,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => throw const AppException.invalidParameter(
+          ).thenThrow(
+            const AppException.invalidParameter(
               message: Strings.invalidParameterError,
             ),
           );

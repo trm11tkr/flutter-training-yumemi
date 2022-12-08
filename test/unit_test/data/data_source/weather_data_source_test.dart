@@ -28,14 +28,14 @@ void main() {
         () {
           when(
             client.fetchWeather(any),
-          ).thenAnswer(
-            (_) => '''
-                    {
-                      "weather_condition":"cloudy",
-                      "max_temperature":25,"min_temperature":7,
-                      "date":"2020-04-01T12:00:00+09:00"
-                    }
-                   ''',
+          ).thenReturn(
+            '''
+            {
+              "weather_condition":"cloudy",
+              "max_temperature":25,"min_temperature":7,
+              "date":"2020-04-01T12:00:00+09:00"
+            }
+            ''',
           );
           final act = dataSource.getWeather(request: defaultRequest);
           final expected = isA<Weather>();
@@ -55,9 +55,8 @@ void main() {
         () {
           when(
             client.fetchWeather(any),
-          ).thenAnswer(
-            // ignore: only_throw_errors
-            (_) => throw YumemiWeatherError.unknown,
+          ).thenThrow(
+            YumemiWeatherError.unknown,
           );
           final act = () {
             dataSource.getWeather(request: defaultRequest);
@@ -84,9 +83,8 @@ void main() {
         () {
           when(
             client.fetchWeather(any),
-          ).thenAnswer(
-            // ignore: only_throw_errors
-            (_) => throw YumemiWeatherError.invalidParameter,
+          ).thenThrow(
+            YumemiWeatherError.invalidParameter,
           );
 
           final act = () {

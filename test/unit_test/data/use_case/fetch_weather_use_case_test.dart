@@ -30,8 +30,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => AppApiResult.success(
+          ).thenReturn(
+            AppApiResult.success(
               data: Weather(
                 weatherCondition: WeatherCondition.cloudy,
                 maxTemperature: 25,
@@ -103,8 +103,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => const AppApiResult.failure(
+          ).thenReturn(
+            const AppApiResult.failure(
               message: Strings.unknownError,
             ),
           );
@@ -170,8 +170,8 @@ void main() {
         () {
           when(
             client.getWeather(request: defaultRequest),
-          ).thenAnswer(
-            (_) => const AppApiResult.failure(
+          ).thenReturn(
+            const AppApiResult.failure(
               message: Strings.invalidParameterError,
             ),
           );
