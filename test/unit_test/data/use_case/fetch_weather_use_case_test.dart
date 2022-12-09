@@ -145,8 +145,8 @@ void main() {
           // minTemperatureUiStateProvider should be reflected
           // in the fetch fetch process of fetchWeatherUseCase
           expect(
-            container.read(maxTemperatureUiStateProvider),
-            const TemperatureUiState.data(25),
+            container.read(minTemperatureUiStateProvider),
+            const TemperatureUiState.data(7),
           );
           verifyInOrder(
             [
