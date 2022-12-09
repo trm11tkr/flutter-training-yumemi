@@ -455,4 +455,134 @@ void main() {
       );
     },
   );
+  test(
+    '''
+    If the same value as the previous value is obtained,
+    don't update providers
+    ''',
+    () {
+      when(
+        client.getWeather(request: defaultRequest),
+      ).thenReturn(
+        AppApiResult.success(
+          data: Weather(
+            weatherCondition: WeatherCondition.cloudy,
+            maxTemperature: 25,
+            minTemperature: 7,
+            date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+          ),
+        ),
+      );
+
+      final container = ProviderContainer(
+        overrides: [
+          fetchWeatherUseCaseProvider.overrideWith(
+            (ref) => FetchWeatherUseCase(
+              ref: ref,
+              repository: client,
+              request: defaultRequest,
+            ),
+          ),
+          maxTemperatureUiStateProvider.overrideWith(
+            (_) => const TemperatureUiState.data(25),
+          ),
+          minTemperatureUiStateProvider.overrideWith(
+            (_) => const TemperatureUiState.data(7),
+          ),
+          weatherImagePanelStateProvider.overrideWith(
+            (_) => const WeatherImagePanelUiState.data(
+              WeatherCondition.cloudy,
+            ),
+          )
+        ],
+      );
+      final weatherViewUiStateListener = Listener<WeatherViewUiState>();
+      container.listen<WeatherViewUiState>(
+        weatherViewUiStateProvider,
+        weatherViewUiStateListener,
+        fireImmediately: true,
+      );
+
+      final maxTemperatureUiStateListener = Listener<TemperatureUiState>();
+      container.listen<TemperatureUiState>(
+        maxTemperatureUiStateProvider,
+        maxTemperatureUiStateListener,
+        fireImmediately: true,
+      );
+
+      final minTemperatureUiStateListener = Listener<TemperatureUiState>();
+      container.listen<TemperatureUiState>(
+        minTemperatureUiStateProvider,
+        minTemperatureUiStateListener,
+        fireImmediately: true,
+      );
+
+      final weatherImagePanelUiStateListener =
+          Listener<WeatherImagePanelUiState>();
+      container.listen<WeatherImagePanelUiState>(
+        weatherImagePanelStateProvider,
+        weatherImagePanelUiStateListener,
+        fireImmediately: true,
+      );
+      container.read(fetchWeatherUseCaseProvider).call();
+
+      // WeatherViewUiState.initial() is the default value
+      expect(
+        container.read(weatherViewUiStateProvider),
+        const WeatherViewUiState.initial(),
+      );
+      verify(
+        weatherViewUiStateListener(
+          null,
+          const WeatherViewUiState.initial(),
+        ),
+      );
+      verifyNoMoreInteractions(weatherViewUiStateListener);
+
+      // maxTemperatureUiStateProvider should not be update
+      expect(
+        container.read(maxTemperatureUiStateProvider),
+        const TemperatureUiState.data(25),
+      );
+      verifyInOrder(
+        [
+          maxTemperatureUiStateListener(
+            null,
+            const TemperatureUiState.data(25),
+          ),
+        ],
+      );
+      verifyNoMoreInteractions(maxTemperatureUiStateListener);
+
+      // minTemperatureUiStateProvider should not be update
+      expect(
+        container.read(minTemperatureUiStateProvider),
+        const TemperatureUiState.data(7),
+      );
+      verifyInOrder(
+        [
+          minTemperatureUiStateListener(
+            null,
+            const TemperatureUiState.data(7),
+          ),
+        ],
+      );
+      verifyNoMoreInteractions(minTemperatureUiStateListener);
+
+      // weatherImagePanelStateProvider should not be update
+      expect(
+        container.read(weatherImagePanelStateProvider),
+        const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
+      );
+      verifyInOrder(
+        [
+          weatherImagePanelUiStateListener(
+            null,
+            const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
+          ),
+        ],
+      );
+      verifyNoMoreInteractions(weatherImagePanelUiStateListener);
+    },
+  );
 }
