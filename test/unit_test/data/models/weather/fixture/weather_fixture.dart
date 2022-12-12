@@ -12,11 +12,11 @@ class WeatherFixtureFactory extends JsonFixtureFactory<Weather> {
         (faker) {
           final weatherCondition =
               WeatherCondition.values[faker.randomGenerator.integer(
-            WeatherCondition.values.length - 1,
+            WeatherCondition.values.length,
           )];
           final maxTemperature = faker.randomGenerator.integer(40, min: 10);
           final minTemperature =
-              faker.randomGenerator.integer(maxTemperature, min: 10);
+              faker.randomGenerator.integer(maxTemperature, min: -40);
           final date = faker.date
               .dateTimeBetween(
                 DateTime(2022),
