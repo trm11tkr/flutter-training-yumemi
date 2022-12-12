@@ -23,7 +23,7 @@ void main() {
     'failure cases: fromJson of Weather',
     () {
       test(
-        'case: nothing WeatherCondition',
+        'case: weather_condition does not exist in WeatherCondition',
         () {
           final weatherJson = <String, dynamic>{
             'weather_condition': 'snow',
