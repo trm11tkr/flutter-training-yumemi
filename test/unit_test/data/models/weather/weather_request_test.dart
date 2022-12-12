@@ -6,33 +6,15 @@ void main() {
     'toJson of WeatherRequest',
     () {
       test(
-        'default WeatherRequest',
-        () {
-          const weatherRequest = WeatherRequest();
-
-          final act = weatherRequest.toJson();
-          final expected = {
-            'area': 'tokyo',
-            'date': '2020-04-01T12:00:00+09:00'
-          };
-
-          expect(act, expected);
-        },
-      );
-
-      test(
         'custom WeatherRequest',
         () {
-          const weatherRequest = WeatherRequest(
+          final weatherRequest = WeatherRequest(
             area: 'kyoto',
-            date: '2023-12-01T12:00:00+02:00',
+            date: DateTime(2023, 1, 1, 1),
           );
 
           final act = weatherRequest.toJson();
-          final expected = {
-            'area': 'kyoto',
-            'date': '2023-12-01T12:00:00+02:00'
-          };
+          final expected = {'area': 'kyoto', 'date': '2023-01-01T01:00:00.000'};
 
           expect(act, expected);
         },

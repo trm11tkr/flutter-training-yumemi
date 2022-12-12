@@ -13,7 +13,9 @@ import 'weather_repository_test.mocks.dart';
 
 @GenerateMocks([WeatherDataSource])
 void main() {
-  const defaultRequest = WeatherRequest();
+  final defaultRequest = WeatherRequest(
+    date: DateTime.now(),
+  );
   final client = MockWeatherDataSource();
 
   group(

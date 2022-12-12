@@ -21,7 +21,7 @@ WeatherRequest _$WeatherRequestFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$WeatherRequest {
   String get area => throw _privateConstructorUsedError;
-  String get date => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $WeatherRequestCopyWith<$Res> {
           WeatherRequest value, $Res Function(WeatherRequest) then) =
       _$WeatherRequestCopyWithImpl<$Res, WeatherRequest>;
   @useResult
-  $Res call({String area, String date});
+  $Res call({String area, DateTime date});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$WeatherRequestCopyWithImpl<$Res, $Val extends WeatherRequest>
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$_WeatherRequestCopyWith<$Res>
       __$$_WeatherRequestCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String area, String date});
+  $Res call({String area, DateTime date});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$_WeatherRequestCopyWithImpl<$Res>
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
     ));
   }
 }
@@ -108,8 +108,7 @@ class __$$_WeatherRequestCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_WeatherRequest implements _WeatherRequest {
-  const _$_WeatherRequest(
-      {this.area = 'tokyo', this.date = '2020-04-01T12:00:00+09:00'});
+  const _$_WeatherRequest({this.area = 'tokyo', required this.date});
 
   factory _$_WeatherRequest.fromJson(Map<String, dynamic> json) =>
       _$$_WeatherRequestFromJson(json);
@@ -118,8 +117,7 @@ class _$_WeatherRequest implements _WeatherRequest {
   @JsonKey()
   final String area;
   @override
-  @JsonKey()
-  final String date;
+  final DateTime date;
 
   @override
   String toString() {
@@ -154,8 +152,8 @@ class _$_WeatherRequest implements _WeatherRequest {
 }
 
 abstract class _WeatherRequest implements WeatherRequest {
-  const factory _WeatherRequest({final String area, final String date}) =
-      _$_WeatherRequest;
+  const factory _WeatherRequest(
+      {final String area, required final DateTime date}) = _$_WeatherRequest;
 
   factory _WeatherRequest.fromJson(Map<String, dynamic> json) =
       _$_WeatherRequest.fromJson;
@@ -163,7 +161,7 @@ abstract class _WeatherRequest implements WeatherRequest {
   @override
   String get area;
   @override
-  String get date;
+  DateTime get date;
   @override
   @JsonKey(ignore: true)
   _$$_WeatherRequestCopyWith<_$_WeatherRequest> get copyWith =>

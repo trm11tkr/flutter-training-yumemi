@@ -14,7 +14,9 @@ import 'weather_data_source_test.mocks.dart';
 
 @GenerateMocks([YumemiWeather])
 void main() {
-  const defaultRequest = WeatherRequest();
+  final defaultRequest = WeatherRequest(
+    date: DateTime.now(),
+  );
   final client = MockYumemiWeather();
   final dataSource = WeatherDataSource(client);
   group(

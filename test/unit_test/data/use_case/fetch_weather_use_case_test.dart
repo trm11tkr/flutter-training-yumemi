@@ -20,7 +20,9 @@ class Listener<T> extends Mock {
 
 @GenerateMocks([WeatherRepository])
 void main() {
-  const defaultRequest = WeatherRequest();
+  final defaultRequest = WeatherRequest(
+    date: DateTime.now(),
+  );
   final client = MockWeatherRepository();
 
   group(
