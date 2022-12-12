@@ -85,30 +85,6 @@ void main() {
             fireImmediately: true,
           );
 
-          // WeatherViewUiState.initial() is the default value
-          expect(
-            container.read(weatherViewUiStateProvider),
-            const WeatherViewUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(maxTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(minTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          //  WeatherImagePanelUiState.initial() is the default value
-          expect(
-            container.read(weatherImagePanelStateProvider),
-            const WeatherImagePanelUiState.initial(),
-          );
-
           // call the process of FetchWeatherUseCase
           container.read(fetchWeatherUseCaseProvider).call();
 
@@ -122,12 +98,9 @@ void main() {
           ).called(1);
           verifyNoMoreInteractions(weatherViewUiStateListener);
 
-          // maxTemperatureUiStateProvider should be reflected
-          // in the fetch fetch process of fetchWeatherUseCase
-          expect(
-            container.read(maxTemperatureUiStateProvider),
-            const TemperatureUiState.data(25),
-          );
+          // the TemperatureUiState is called immediately
+          // with TemperatureUiState.initial(), the default value
+          // After that, maxTemperatureUiStateProvider is updated only once.
           verifyInOrder(
             [
               maxTemperatureUiStateListener(
@@ -142,12 +115,9 @@ void main() {
           );
           verifyNoMoreInteractions(maxTemperatureUiStateListener);
 
-          // minTemperatureUiStateProvider should be reflected
-          // in the fetch fetch process of fetchWeatherUseCase
-          expect(
-            container.read(minTemperatureUiStateProvider),
-            const TemperatureUiState.data(7),
-          );
+          // the TemperatureUiState is called immediately
+          // with TemperatureUiState.initial(), the default value
+          // After that, minTemperatureUiStateProvider is updated only once.
           verifyInOrder(
             [
               minTemperatureUiStateListener(
@@ -162,12 +132,9 @@ void main() {
           );
           verifyNoMoreInteractions(minTemperatureUiStateListener);
 
-          // weatherImagePanelStateProvider should be reflected
-          // in the fetch fetch process of fetchWeatherUseCase
-          expect(
-            container.read(weatherImagePanelStateProvider),
-            const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
-          );
+          // the TemperatureUiState is called immediately
+          // with TemperatureUiState.initial(), the default value
+          // After that, weatherImagePanelStateProvider is updated only once.
           verifyInOrder(
             [
               weatherImagePanelUiStateListener(
@@ -238,53 +205,26 @@ void main() {
             fireImmediately: true,
           );
 
-          // WeatherViewUiState.initial() is the default value
-          expect(
-            container.read(weatherViewUiStateProvider),
-            const WeatherViewUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(maxTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(minTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          //  WeatherImagePanelUiState.initial() is the default value
-          expect(
-            container.read(weatherImagePanelStateProvider),
-            const WeatherImagePanelUiState.initial(),
-          );
-
-          // the weatherViewUiStateListener is called immediately
-          // with WeatherViewUiState.initial(), the default value
-          verify(
-            weatherViewUiStateListener(
-              null,
-              const WeatherViewUiState.initial(),
-            ),
-          ).called(1);
-          verifyNoMoreInteractions(weatherViewUiStateListener);
-
           // call the process of FetchWeatherUseCase
           container.read(fetchWeatherUseCaseProvider).call();
 
-          // the weatherImagePanelUiStateListener is called immediately
-          // with WeatherImagePanelUiState.error(Strings.invalidParameterError)
-          verify(
-            weatherViewUiStateListener(
-              const WeatherViewUiState.initial(),
-              const WeatherViewUiState.error(
-                Strings.unknownError,
+          // the WeatherViewUiState is called immediately
+          // with WeatherViewUiState.initial(), the default value
+          // After that, weatherViewUiStateProvider is updated only once.
+          verifyInOrder(
+            [
+              weatherViewUiStateListener(
+                null,
+                const WeatherViewUiState.initial(),
               ),
-            ),
-          ).called(1);
+              weatherViewUiStateListener(
+                const WeatherViewUiState.initial(),
+                const WeatherViewUiState.error(
+                  Strings.unknownError,
+                ),
+              ),
+            ],
+          );
           verifyNoMoreInteractions(weatherViewUiStateListener);
 
           // the maxTemperatureUiStateListener is called immediately
@@ -373,53 +313,26 @@ void main() {
             fireImmediately: true,
           );
 
-          // WeatherViewUiState.initial() is the default value
-          expect(
-            container.read(weatherViewUiStateProvider),
-            const WeatherViewUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(maxTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          // TemperatureUiState.initial() is the default value
-          expect(
-            container.read(minTemperatureUiStateProvider),
-            const TemperatureUiState.initial(),
-          );
-
-          //  WeatherImagePanelUiState.initial() is the default value
-          expect(
-            container.read(weatherImagePanelStateProvider),
-            const WeatherImagePanelUiState.initial(),
-          );
-
-          // the weatherViewUiStateListener is called immediately
-          // with WeatherViewUiState.initial(), the default value
-          verify(
-            weatherViewUiStateListener(
-              null,
-              const WeatherViewUiState.initial(),
-            ),
-          ).called(1);
-          verifyNoMoreInteractions(weatherViewUiStateListener);
-
           // call the process of FetchWeatherUseCase
           container.read(fetchWeatherUseCaseProvider).call();
 
-          // the weatherImagePanelUiStateListener is called immediately
-          // with WeatherImagePanelUiState.error(Strings.invalidParameterError)
-          verify(
-            weatherViewUiStateListener(
-              const WeatherViewUiState.initial(),
-              const WeatherViewUiState.error(
-                Strings.invalidParameterError,
+          // the WeatherViewUiState is called immediately
+          // with WeatherViewUiState.initial(), the default value
+          // After that, weatherViewUiStateProvider is updated only once.
+          verifyInOrder(
+            [
+              weatherViewUiStateListener(
+                null,
+                const WeatherViewUiState.initial(),
               ),
-            ),
-          ).called(1);
+              weatherViewUiStateListener(
+                const WeatherViewUiState.initial(),
+                const WeatherViewUiState.error(
+                  Strings.invalidParameterError,
+                ),
+              ),
+            ],
+          );
           verifyNoMoreInteractions(weatherViewUiStateListener);
 
           // the maxTemperatureUiStateListener is called immediately
@@ -483,17 +396,6 @@ void main() {
               request: defaultRequest,
             ),
           ),
-          maxTemperatureUiStateProvider.overrideWith(
-            (_) => const TemperatureUiState.data(25),
-          ),
-          minTemperatureUiStateProvider.overrideWith(
-            (_) => const TemperatureUiState.data(7),
-          ),
-          weatherImagePanelStateProvider.overrideWith(
-            (_) => const WeatherImagePanelUiState.data(
-              WeatherCondition.cloudy,
-            ),
-          )
         ],
       );
       final weatherViewUiStateListener = Listener<WeatherViewUiState>();
@@ -524,60 +426,58 @@ void main() {
         weatherImagePanelUiStateListener,
         fireImmediately: true,
       );
+
+      // call the process of FetchWeatherUseCase
       container.read(fetchWeatherUseCaseProvider).call();
 
-      // WeatherViewUiState.initial() is the default value
-      expect(
-        container.read(weatherViewUiStateProvider),
-        const WeatherViewUiState.initial(),
-      );
-      verify(
-        weatherViewUiStateListener(
-          null,
-          const WeatherViewUiState.initial(),
-        ),
-      );
-      verifyNoMoreInteractions(weatherViewUiStateListener);
+      // call the process of FetchWeatherUseCase again
+      container.read(fetchWeatherUseCaseProvider).call();
 
-      // maxTemperatureUiStateProvider should not be update
-      expect(
-        container.read(maxTemperatureUiStateProvider),
-        const TemperatureUiState.data(25),
-      );
+      // the TemperatureUiState is called immediately
+      // with TemperatureUiState.initial(), the default value
+      // After that, maxTemperatureUiStateProvider is updated only once.
       verifyInOrder(
         [
           maxTemperatureUiStateListener(
             null,
+            const TemperatureUiState.initial(),
+          ),
+          maxTemperatureUiStateListener(
+            const TemperatureUiState.initial(),
             const TemperatureUiState.data(25),
           ),
         ],
       );
       verifyNoMoreInteractions(maxTemperatureUiStateListener);
 
-      // minTemperatureUiStateProvider should not be update
-      expect(
-        container.read(minTemperatureUiStateProvider),
-        const TemperatureUiState.data(7),
-      );
+      // the TemperatureUiState is called immediately
+      // with TemperatureUiState.initial(), the default value
+      // After that, minTemperatureUiStateProvider is updated only once.
       verifyInOrder(
         [
           minTemperatureUiStateListener(
             null,
+            const TemperatureUiState.initial(),
+          ),
+          minTemperatureUiStateListener(
+            const TemperatureUiState.initial(),
             const TemperatureUiState.data(7),
           ),
         ],
       );
       verifyNoMoreInteractions(minTemperatureUiStateListener);
 
-      // weatherImagePanelStateProvider should not be update
-      expect(
-        container.read(weatherImagePanelStateProvider),
-        const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
-      );
+      // the TemperatureUiState is called immediately
+      // with TemperatureUiState.initial(), the default value
+      // After that, weatherImagePanelStateProvider is updated only once.
       verifyInOrder(
         [
           weatherImagePanelUiStateListener(
             null,
+            const WeatherImagePanelUiState.initial(),
+          ),
+          weatherImagePanelUiStateListener(
+            const WeatherImagePanelUiState.initial(),
             const WeatherImagePanelUiState.data(WeatherCondition.cloudy),
           ),
         ],
