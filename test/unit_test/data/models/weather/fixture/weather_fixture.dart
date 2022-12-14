@@ -26,7 +26,7 @@ class WeatherFixtureFactory extends JsonFixtureFactory<Weather> {
 
           return Weather(
             weatherCondition: weatherCondition,
-            maxTemperature: faker.randomGenerator.integer(100, min: 10),
+            maxTemperature: maxTemperature,
             minTemperature: minTemperature,
             date: DateTime.parse(date),
           );
