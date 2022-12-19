@@ -5,6 +5,7 @@ import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/data/use_case/fetch_weather_use_case.dart';
+import 'package:flutter_training/views/constants/strings.dart';
 import 'package:flutter_training/views/weather_view.dart';
 import 'package:mockito/mockito.dart';
 
@@ -157,6 +158,84 @@ void main() {
 
           expect(find.text('25℃'), findsNothing);
           expect(find.text('-5℃'), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        '''
+        Dialog and message should be visible 
+        when unknown api error occurs.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsOneWidget);
+          expect(find.text(Strings.unknownError), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        '''
+        Dialog and message should be visible 
+        when invalid parameter api error occurs.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsOneWidget);
+          expect(find.text(Strings.invalidParameterError), findsOneWidget);
         },
       );
     },
