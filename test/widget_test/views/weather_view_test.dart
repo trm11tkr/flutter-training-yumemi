@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
@@ -38,6 +39,174 @@ void main() {
           expect(find.text('Close'), findsOneWidget);
           expect(find.text('Reload'), findsOneWidget);
           expect(find.text('**℃'), findsNWidgets(2));
+        },
+      );
+
+      testWidgets(
+        'You should see svg picture of sunny.',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.sunny,
+                maxTemperature: 25,
+                minTemperature: 7,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
+          );
+          expect(find.byType(Placeholder), findsOneWidget);
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Placeholder), findsNothing);
+          expect(
+            find.byWidgetPredicate(
+              (widget) {
+                if (widget is SvgPicture) {
+                  final exactAssetPicture = widget.pictureProvider;
+                  if (exactAssetPicture is ExactAssetPicture) {
+                    const expected = 'assets/images/sunny.svg';
+                    return exactAssetPicture.assetName == expected;
+                  }
+                }
+                return false;
+              },
+            ),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'You should see svg picture of cloudy.',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.cloudy,
+                maxTemperature: 25,
+                minTemperature: 7,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
+          );
+          expect(find.byType(Placeholder), findsOneWidget);
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Placeholder), findsNothing);
+          expect(
+            find.byWidgetPredicate(
+              (widget) {
+                if (widget is SvgPicture) {
+                  final exactAssetPicture = widget.pictureProvider;
+                  if (exactAssetPicture is ExactAssetPicture) {
+                    const expected = 'assets/images/cloudy.svg';
+                    return exactAssetPicture.assetName == expected;
+                  }
+                }
+                return false;
+              },
+            ),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        'You should see svg picture of rainy.',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.rainy,
+                maxTemperature: 25,
+                minTemperature: 7,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
+          );
+          expect(find.byType(Placeholder), findsOneWidget);
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Placeholder), findsNothing);
+          expect(
+            find.byWidgetPredicate(
+              (widget) {
+                if (widget is SvgPicture) {
+                  final exactAssetPicture = widget.pictureProvider;
+                  if (exactAssetPicture is ExactAssetPicture) {
+                    const expected = 'assets/images/rainy.svg';
+                    return exactAssetPicture.assetName == expected;
+                  }
+                }
+                return false;
+              },
+            ),
+            findsOneWidget,
+          );
         },
       );
 
