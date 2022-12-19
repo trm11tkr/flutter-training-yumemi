@@ -6,7 +6,9 @@ part 'weather_request.g.dart';
 
 final weatherRequestStateProvider = StateProvider<WeatherRequest>(
   (_) {
-    return const WeatherRequest();
+    return WeatherRequest(
+      date: DateTime.now(),
+    );
   },
 );
 
@@ -14,7 +16,7 @@ final weatherRequestStateProvider = StateProvider<WeatherRequest>(
 class WeatherRequest with _$WeatherRequest {
   const factory WeatherRequest({
     @Default('tokyo') String area,
-    @Default('2020-04-01T12:00:00+09:00') String date,
+    required DateTime date,
   }) = _WeatherRequest;
 
   factory WeatherRequest.fromJson(Map<String, dynamic> json) =>

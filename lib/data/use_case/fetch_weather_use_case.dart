@@ -38,20 +38,41 @@ class FetchWeatherUseCase {
     result.when(
       success: (weather) {
         _ref.read(weatherImagePanelStateProvider.notifier).update(
-              (state) => WeatherImagePanelUiState.data(
+          (state) {
+            final currentWeatherCondition =
+                state.mapOrNull(data: (data) => data.condition);
+            if (currentWeatherCondition == weather.weatherCondition) {
+              return state;
+            } else {
+              return WeatherImagePanelUiState.data(
                 weather.weatherCondition,
-              ),
-            );
-        _ref.read(minTemperatureUiStateProvider.notifier).update(
-              (state) => TemperatureUiState.data(
-                weather.minTemperature,
-              ),
-            );
+              );
+            }
+          },
+        );
         _ref.read(maxTemperatureUiStateProvider.notifier).update(
-              (state) => TemperatureUiState.data(
-                weather.maxTemperature,
-              ),
-            );
+          (state) {
+            final currentMaxTemperature =
+                state.mapOrNull(data: (data) => data.temperature);
+            if (currentMaxTemperature == weather.maxTemperature) {
+              return state;
+            } else {
+              return TemperatureUiState.data(weather.maxTemperature);
+            }
+          },
+        );
+
+        _ref.read(minTemperatureUiStateProvider.notifier).update(
+          (state) {
+            final currentMinTemperature =
+                state.mapOrNull(data: (data) => data.temperature);
+            if (currentMinTemperature == weather.minTemperature) {
+              return state;
+            } else {
+              return TemperatureUiState.data(weather.minTemperature);
+            }
+          },
+        );
       },
       failure: (error) {
         _ref.read(weatherViewUiStateProvider.notifier).update(
