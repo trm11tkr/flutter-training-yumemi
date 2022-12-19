@@ -99,6 +99,66 @@ void main() {
           expect(find.text('30℃'), findsOneWidget);
         },
       );
+
+      testWidgets(
+        'You should see a min temperature.',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.cloudy,
+                maxTemperature: 25,
+                minTemperature: 7,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
+          );
+          expect(find.byType(TextButton), findsNWidgets(2));
+          expect(find.text('**℃'), findsNWidgets(2));
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.text('7℃'), findsOneWidget);
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: Weather(
+                weatherCondition: WeatherCondition.cloudy,
+                maxTemperature: 30,
+                minTemperature: -5,
+                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+              ),
+            ),
+          );
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.text('25℃'), findsNothing);
+          expect(find.text('-5℃'), findsOneWidget);
+        },
+      );
     },
   );
 }
