@@ -19,7 +19,7 @@ void main() {
   );
   final repository = MockWeatherRepository();
   group(
-    'WeatherView',
+    'success cases of api response',
     () {
       testWidgets(
         'first build',
@@ -329,11 +329,18 @@ void main() {
           expect(find.text('-5℃'), findsOneWidget);
         },
       );
-
+    },
+  );
+  group(
+    '''
+    failure cases of api response.
+    ''',
+    () {
       testWidgets(
         '''
         Dialog and message should be visible 
         when unknown api error occurs.
+        The dialog is closed by pressing the ok button.
         ''',
         (tester) async {
           await setUpOfDeviceSize();
@@ -366,6 +373,60 @@ void main() {
 
           expect(find.byType(Dialog), findsOneWidget);
           expect(find.text(Strings.unknownError), findsOneWidget);
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsNothing);
+          expect(find.text(Strings.unknownError), findsNothing);
+        },
+      );
+
+      testWidgets(
+        '''
+        Dialog and message should be visible 
+        when unknown api error occurs.
+        That dialog is also closed by pressing outside the dialog's range.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsOneWidget);
+          expect(find.text(Strings.unknownError), findsOneWidget);
+
+          await tester.tapAt(
+            const Offset(5, 5),
+          );
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsNothing);
+          expect(find.text(Strings.unknownError), findsNothing);
         },
       );
 
@@ -373,6 +434,7 @@ void main() {
         '''
         Dialog and message should be visible 
         when invalid parameter api error occurs.
+        The dialog is closed by pressing the ok button.
         ''',
         (tester) async {
           await setUpOfDeviceSize();
@@ -405,6 +467,60 @@ void main() {
 
           expect(find.byType(Dialog), findsOneWidget);
           expect(find.text(Strings.invalidParameterError), findsOneWidget);
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsNothing);
+          expect(find.text(Strings.invalidParameterError), findsNothing);
+        },
+      );
+
+      testWidgets(
+        '''
+        Dialog and message should be visible 
+        when invalid parameter api error occurs.
+        That dialog is also closed by pressing outside the dialog's range.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
+                  ),
+                )
+              ],
+              child: const MaterialApp(
+                home: WeatherView(),
+              ),
+            ),
+          );
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsOneWidget);
+          expect(find.text(Strings.invalidParameterError), findsOneWidget);
+
+          await tester.tapAt(
+            const Offset(5, 5),
+          );
+          await tester.pump();
+
+          expect(find.byType(Dialog), findsNothing);
+          expect(find.text(Strings.invalidParameterError), findsNothing);
         },
       );
     },
