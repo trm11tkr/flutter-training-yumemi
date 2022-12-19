@@ -23,7 +23,7 @@ void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
   );
-  final client = MockWeatherRepository();
+  final repository = MockWeatherRepository();
 
   group(
     'call method of FetchWeatherUseCase',
@@ -35,7 +35,7 @@ void main() {
         ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
               data: Weather(
@@ -52,7 +52,7 @@ void main() {
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: client,
+                  repository: repository,
                   request: defaultRequest,
                 ),
               )
@@ -160,7 +160,7 @@ void main() {
         ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            repository.getWeather(request: defaultRequest),
           ).thenReturn(
             const AppApiResult.failure(
               message: Strings.unknownError,
@@ -171,7 +171,7 @@ void main() {
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: client,
+                  repository: repository,
                   request: defaultRequest,
                 ),
               )
@@ -268,7 +268,7 @@ void main() {
         ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            repository.getWeather(request: defaultRequest),
           ).thenReturn(
             const AppApiResult.failure(
               message: Strings.invalidParameterError,
@@ -279,7 +279,7 @@ void main() {
               fetchWeatherUseCaseProvider.overrideWith(
                 (ref) => FetchWeatherUseCase(
                   ref: ref,
-                  repository: client,
+                  repository: repository,
                   request: defaultRequest,
                 ),
               )
@@ -377,7 +377,7 @@ void main() {
     ''',
     () {
       when(
-        client.getWeather(request: defaultRequest),
+        repository.getWeather(request: defaultRequest),
       ).thenReturn(
         AppApiResult.success(
           data: Weather(
@@ -394,7 +394,7 @@ void main() {
           fetchWeatherUseCaseProvider.overrideWith(
             (ref) => FetchWeatherUseCase(
               ref: ref,
-              repository: client,
+              repository: repository,
               request: defaultRequest,
             ),
           ),

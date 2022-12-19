@@ -16,7 +16,8 @@ void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
   );
-  final client = MockWeatherDataSource();
+  final dataSource = MockWeatherDataSource();
+  final repository =  WeatherRepository(dataSource);
 
   group(
     'getWeather of WeatherRepository',
@@ -28,7 +29,7 @@ void main() {
            ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            dataSource.getWeather(request: defaultRequest),
           ).thenReturn(
             Weather(
               weatherCondition: WeatherCondition.cloudy,
@@ -38,7 +39,7 @@ void main() {
             ),
           );
 
-          final act = WeatherRepository(client).getWeather(
+          final act = repository.getWeather(
             request: defaultRequest,
           );
           final expected = isA<AppApiResult<Weather>>();
@@ -54,14 +55,14 @@ void main() {
         ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            dataSource.getWeather(request: defaultRequest),
           ).thenThrow(
             const AppException.unknown(
               message: Strings.unknownError,
             ),
           );
 
-          final act = WeatherRepository(client).getWeather(
+          final act = repository.getWeather(
             request: defaultRequest,
           );
           const expected = AppApiResult<Weather>.failure(
@@ -79,7 +80,7 @@ void main() {
         ''',
         () {
           when(
-            client.getWeather(request: defaultRequest),
+            dataSource.getWeather(request: defaultRequest),
           ).thenThrow(
             const AppException.invalidParameter(
               message: Strings.invalidParameterError,
@@ -87,7 +88,7 @@ void main() {
           );
 
           final act =
-              WeatherRepository(client).getWeather(request: defaultRequest);
+              repository.getWeather(request: defaultRequest);
           const expected = AppApiResult<Weather>.failure(
             message: Strings.invalidParameterError,
           );
