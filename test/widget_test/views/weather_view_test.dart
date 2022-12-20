@@ -34,6 +34,12 @@ void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
   );
+  final defaultWeather = Weather(
+    weatherCondition: WeatherCondition.sunny,
+    maxTemperature: 25,
+    minTemperature: 7,
+    date: DateTime.parse('2020-04-01T12:00:00+09:00'),
+  );
   final repository = MockWeatherRepository();
   group(
     'success cases of api response',
@@ -83,12 +89,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
-                weatherCondition: WeatherCondition.sunny,
-                maxTemperature: 25,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
-              ),
+              // Default WeatherCondition is WeatherCondition.sunny
+              data: defaultWeather,
             ),
           );
           expect(find.byType(Placeholder), findsOneWidget);
@@ -125,11 +127,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
+              data: defaultWeather.copyWith(
                 weatherCondition: WeatherCondition.cloudy,
-                maxTemperature: 25,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
               ),
             ),
           );
@@ -167,11 +166,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
+              data: defaultWeather.copyWith(
                 weatherCondition: WeatherCondition.rainy,
-                maxTemperature: 25,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
               ),
             ),
           );
@@ -209,12 +205,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
-                weatherCondition: WeatherCondition.cloudy,
-                maxTemperature: 25,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
-              ),
+              // Default maxTemperature is 25
+              data: defaultWeather,
             ),
           );
           expect(find.byType(TextButton), findsNWidgets(2));
@@ -229,11 +221,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
-                weatherCondition: WeatherCondition.cloudy,
+              data: defaultWeather.copyWith(
                 maxTemperature: 30,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
               ),
             ),
           );
@@ -269,12 +258,8 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
-                weatherCondition: WeatherCondition.cloudy,
-                maxTemperature: 25,
-                minTemperature: 7,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
-              ),
+              // Default minTemperature is 7
+              data: defaultWeather,
             ),
           );
           expect(find.byType(TextButton), findsNWidgets(2));
@@ -289,18 +274,15 @@ void main() {
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
             AppApiResult.success(
-              data: Weather(
-                weatherCondition: WeatherCondition.cloudy,
-                maxTemperature: 30,
+              data: defaultWeather.copyWith(
                 minTemperature: -5,
-                date: DateTime.parse('2020-04-01T12:00:00+09:00'),
               ),
             ),
           );
           await tester.tap(find.text('Reload'));
           await tester.pump();
 
-          expect(find.text('25℃'), findsNothing);
+          expect(find.text('7℃'), findsNothing);
           expect(find.text('-5℃'), findsOneWidget);
         },
       );
