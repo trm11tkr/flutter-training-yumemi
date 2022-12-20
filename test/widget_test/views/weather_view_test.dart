@@ -416,4 +416,235 @@ void main() {
       );
     },
   );
+
+  group(
+    '''
+    Test for correct operation after closing the dialog.
+    ''',
+    () {
+      testWidgets(
+        '''
+        After the dialog with message of Strings.unknownError 
+        is closed and new weather data is fetched,
+        The new weather data should be reflected on the screen.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsOneWidget,
+          );
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsNothing,
+          );
+
+          expect(find.byType(Placeholder), findsOneWidget);
+          expect(find.text('**℃'), findsNWidgets(2));
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: defaultWeather,
+            ),
+          );
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Placeholder), findsNothing);
+          _expectSvgPicture('assets/images/sunny.svg', findsOneWidget);
+
+          expect(find.text('25℃'), findsOneWidget);
+          expect(find.text('7℃'), findsOneWidget);
+          expect(find.text('**℃'), findsNothing);
+        },
+      );
+
+      testWidgets(
+        '''
+        After the dialog with message of Strings.invalidParameterError 
+        is closed and new weather data is fetched,
+        The new weather data should be reflected on the screen.
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsOneWidget,
+          );
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsNothing,
+          );
+
+          expect(find.byType(Placeholder), findsOneWidget);
+          expect(find.text('**℃'), findsNWidgets(2));
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: defaultWeather,
+            ),
+          );
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(find.byType(Placeholder), findsNothing);
+          _expectSvgPicture('assets/images/sunny.svg', findsOneWidget);
+
+          expect(find.text('25℃'), findsOneWidget);
+          expect(find.text('7℃'), findsOneWidget);
+          expect(find.text('**℃'), findsNothing);
+        },
+      );
+
+      testWidgets(
+        '''
+        After the dialog with message of Strings.invalidParameterError is closed and
+        repository return AppApiResult.failure with Strings.unknownError, 
+        Dialog with message of Strings.unknownError should be visible. 
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsOneWidget,
+          );
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsNothing,
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsOneWidget,
+          );
+        },
+      );
+
+      testWidgets(
+        '''
+        After the dialog with message of Strings.unknownError is closed and
+        repository return AppApiResult.failure with Strings.invalidParameterError, 
+        Dialog with message of Strings.invalidParameterError should be visible. 
+        ''',
+        (tester) async {
+          await setUpOfDeviceSize();
+          await tester.pumpWidget(
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.unknownError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsOneWidget,
+          );
+
+          await tester.tap(find.text('OK'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsNothing,
+          );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            const AppApiResult.failure(
+              message: Strings.invalidParameterError,
+            ),
+          );
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsOneWidget,
+          );
+        },
+      );
+    },
+  );
 }
