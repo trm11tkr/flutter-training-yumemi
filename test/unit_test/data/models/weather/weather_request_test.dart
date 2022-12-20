@@ -10,7 +10,7 @@ void main() {
         'success case: toJson of WeatherRequest',
         () {
           final weatherRequestsWithJsonArray =
-              WeatherRequestFixtureFactory().makeManyWithJsonArray(10);
+              WeatherRequestFixture.factory().makeManyWithJsonArray(10);
           for (final weatherRequestWithJson in weatherRequestsWithJsonArray) {
             final act = weatherRequestWithJson.object.toJson();
             final expected = weatherRequestWithJson.json;
