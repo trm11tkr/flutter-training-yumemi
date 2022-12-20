@@ -328,14 +328,18 @@ void main() {
           await tester.tap(find.text('Reload'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsOneWidget);
-          expect(find.text(Strings.unknownError), findsOneWidget);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsOneWidget,
+          );
 
           await tester.tap(find.text('OK'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsNothing);
-          expect(find.text(Strings.unknownError), findsNothing);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsNothing,
+          );
         },
       );
 
@@ -374,16 +378,20 @@ void main() {
           await tester.tap(find.text('Reload'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsOneWidget);
-          expect(find.text(Strings.unknownError), findsOneWidget);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsOneWidget,
+          );
 
           await tester.tapAt(
             const Offset(5, 5),
           );
           await tester.pump();
 
-          expect(find.byType(Dialog), findsNothing);
-          expect(find.text(Strings.unknownError), findsNothing);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.unknownError),
+            findsNothing,
+          );
         },
       );
 
@@ -422,14 +430,18 @@ void main() {
           await tester.tap(find.text('Reload'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsOneWidget);
-          expect(find.text(Strings.invalidParameterError), findsOneWidget);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsOneWidget,
+          );
 
           await tester.tap(find.text('OK'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsNothing);
-          expect(find.text(Strings.invalidParameterError), findsNothing);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsNothing,
+          );
         },
       );
 
@@ -468,16 +480,20 @@ void main() {
           await tester.tap(find.text('Reload'));
           await tester.pump();
 
-          expect(find.byType(Dialog), findsOneWidget);
-          expect(find.text(Strings.invalidParameterError), findsOneWidget);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsOneWidget,
+          );
 
           await tester.tapAt(
             const Offset(5, 5),
           );
           await tester.pump();
 
-          expect(find.byType(Dialog), findsNothing);
-          expect(find.text(Strings.invalidParameterError), findsNothing);
+          expect(
+            find.widgetWithText(AlertDialog, Strings.invalidParameterError),
+            findsNothing,
+          );
         },
       );
     },
