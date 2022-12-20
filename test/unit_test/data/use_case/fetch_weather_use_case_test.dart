@@ -12,7 +12,7 @@ import 'package:flutter_training/views/ui_state/weather_view_ui_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'fetch_weather_use_case_test.mocks.dart';
+import '../../../mocks/mock_weather_repository.mocks.dart';
 
 class Listener<T> extends Mock {
   void call(T? previous, T value);

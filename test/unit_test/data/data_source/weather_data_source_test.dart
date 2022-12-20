@@ -10,7 +10,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
-import 'weather_data_source_test.mocks.dart';
+import '../../../mocks/mock_yumemi_weather.mocks.dart';
 
 @GenerateMocks([YumemiWeather])
 void main() {

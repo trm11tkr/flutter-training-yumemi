@@ -9,7 +9,7 @@ import 'package:flutter_training/views/constants/strings.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'weather_repository_test.mocks.dart';
+import '../../../mocks/mock_weather_data_source.mocks.dart';
 
 @GenerateMocks([WeatherDataSource])
 void main() {

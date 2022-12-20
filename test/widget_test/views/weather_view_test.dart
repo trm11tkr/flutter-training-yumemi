@@ -10,8 +10,8 @@ import 'package:flutter_training/views/constants/strings.dart';
 import 'package:flutter_training/views/weather_view.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../mocks/mock_weather_repository.mocks.dart';
 import '../../test_util/test_agent.dart';
-import '../../unit_test/data/use_case/fetch_weather_use_case_test.mocks.dart';
 
 void _expectSvgPicture(String expectedAssetName, Matcher matcher) {
   expect(
