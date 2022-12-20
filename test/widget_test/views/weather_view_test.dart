@@ -339,7 +339,7 @@ void main() {
       testWidgets(
         '''
         Dialog and message should be visible 
-        when unknown api error occurs.
+        when repository return AppApiResult.failure with Strings.unknownError.
         The dialog is closed by pressing the ok button.
         ''',
         (tester) async {
@@ -385,7 +385,7 @@ void main() {
       testWidgets(
         '''
         Dialog and message should be visible 
-        when unknown api error occurs.
+        when repository return AppApiResult.failure with Strings.unknownError.
         That dialog is also closed by pressing outside the dialog's range.
         ''',
         (tester) async {
@@ -433,7 +433,7 @@ void main() {
       testWidgets(
         '''
         Dialog and message should be visible 
-        when invalid parameter api error occurs.
+        when repository return AppApiResult.failure with Strings.invalidParameterError.
         The dialog is closed by pressing the ok button.
         ''',
         (tester) async {
@@ -479,7 +479,7 @@ void main() {
       testWidgets(
         '''
         Dialog and message should be visible 
-        when invalid parameter api error occurs.
+        when repository return AppApiResult.failure with Strings.invalidParameterError.
         That dialog is also closed by pressing outside the dialog's range.
         ''',
         (tester) async {
