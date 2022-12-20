@@ -21,10 +21,6 @@ void main() {
               ),
             ),
           );
-        },
-      );
-      await tester.runAsync(
-        () async {
           await tester.pumpAndSettle();
           expect(find.byType(StartUpView), findsOneWidget);
           expect(find.byType(WeatherView), findsNothing);
