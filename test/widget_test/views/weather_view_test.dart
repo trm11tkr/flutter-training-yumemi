@@ -13,6 +13,23 @@ import 'package:mockito/mockito.dart';
 import '../../test_util/test_agent.dart';
 import '../../unit_test/data/use_case/fetch_weather_use_case_test.mocks.dart';
 
+void _expectSvgPicture(String expectedAssetName, Matcher matcher) {
+  expect(
+    find.byWidgetPredicate(
+      (widget) {
+        if (widget is SvgPicture) {
+          final exactAssetPicture = widget.pictureProvider;
+          if (exactAssetPicture is ExactAssetPicture) {
+            return exactAssetPicture.assetName == expectedAssetName;
+          }
+        }
+        return false;
+      },
+    ),
+    matcher,
+  );
+}
+
 void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
@@ -80,21 +97,7 @@ void main() {
           await tester.pump();
 
           expect(find.byType(Placeholder), findsNothing);
-          expect(
-            find.byWidgetPredicate(
-              (widget) {
-                if (widget is SvgPicture) {
-                  final exactAssetPicture = widget.pictureProvider;
-                  if (exactAssetPicture is ExactAssetPicture) {
-                    const expected = 'assets/images/sunny.svg';
-                    return exactAssetPicture.assetName == expected;
-                  }
-                }
-                return false;
-              },
-            ),
-            findsOneWidget,
-          );
+          _expectSvgPicture('assets/images/sunny.svg', findsOneWidget);
         },
       );
 
@@ -136,21 +139,7 @@ void main() {
           await tester.pump();
 
           expect(find.byType(Placeholder), findsNothing);
-          expect(
-            find.byWidgetPredicate(
-              (widget) {
-                if (widget is SvgPicture) {
-                  final exactAssetPicture = widget.pictureProvider;
-                  if (exactAssetPicture is ExactAssetPicture) {
-                    const expected = 'assets/images/cloudy.svg';
-                    return exactAssetPicture.assetName == expected;
-                  }
-                }
-                return false;
-              },
-            ),
-            findsOneWidget,
-          );
+          _expectSvgPicture('assets/images/cloudy.svg', findsOneWidget);
         },
       );
 
@@ -192,21 +181,7 @@ void main() {
           await tester.pump();
 
           expect(find.byType(Placeholder), findsNothing);
-          expect(
-            find.byWidgetPredicate(
-              (widget) {
-                if (widget is SvgPicture) {
-                  final exactAssetPicture = widget.pictureProvider;
-                  if (exactAssetPicture is ExactAssetPicture) {
-                    const expected = 'assets/images/rainy.svg';
-                    return exactAssetPicture.assetName == expected;
-                  }
-                }
-                return false;
-              },
-            ),
-            findsOneWidget,
-          );
+          _expectSvgPicture('assets/images/rainy.svg', findsOneWidget);
         },
       );
 
