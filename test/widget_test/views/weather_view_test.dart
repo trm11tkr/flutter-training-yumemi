@@ -321,6 +321,8 @@ void main() {
             findsOneWidget,
           );
 
+          // To tap outside the range of the dialog widget,
+          // specify the edge of the screen in Offset.
           await tester.tapAt(
             const Offset(5, 5),
           );
@@ -399,6 +401,8 @@ void main() {
             findsOneWidget,
           );
 
+          // To tap outside the range of the dialog widget,
+          // specify the edge of the screen in Offset.
           await tester.tapAt(
             const Offset(5, 5),
           );
