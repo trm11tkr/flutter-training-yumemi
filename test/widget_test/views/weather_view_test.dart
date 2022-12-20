@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
+import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/data/use_case/fetch_weather_use_case.dart';
 import 'package:flutter_training/views/constants/strings.dart';
 import 'package:flutter_training/views/weather_view.dart';
@@ -27,6 +28,26 @@ void _expectSvgPicture(String expectedAssetName, Matcher matcher) {
       },
     ),
     matcher,
+  );
+}
+
+ProviderScope _setUpWithFetchWeatherUseCaseProvider(
+  WeatherRepository repository,
+  WeatherRequest request,
+) {
+  return ProviderScope(
+    overrides: [
+      fetchWeatherUseCaseProvider.overrideWith(
+        (ref) => FetchWeatherUseCase(
+          ref: ref,
+          repository: repository,
+          request: request,
+        ),
+      )
+    ],
+    child: const MaterialApp(
+      home: WeatherView(),
+    ),
   );
 }
 
@@ -70,21 +91,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -108,21 +117,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -147,21 +144,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -186,21 +171,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -239,21 +212,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -301,22 +262,11 @@ void main() {
         ''',
         (tester) async {
           await setUpOfDeviceSize();
+
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -352,21 +302,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -404,21 +342,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
@@ -454,21 +380,9 @@ void main() {
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
-            ProviderScope(
-              overrides: [
-                fetchWeatherUseCaseProvider.overrideWith(
-                  (ref) => FetchWeatherUseCase(
-                    ref: ref,
-                    repository: repository,
-                    request: defaultRequest,
-                  ),
-                )
-              ],
-              child: const MaterialApp(
-                home: WeatherView(),
-              ),
-            ),
+            _setUpWithFetchWeatherUseCaseProvider(repository, defaultRequest),
           );
+
           when(
             repository.getWeather(request: defaultRequest),
           ).thenReturn(
