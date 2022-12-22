@@ -11,7 +11,7 @@ import 'package:flutter_training/views/weather_view.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks/mock_weather_repository.mocks.dart';
-import '../../test_util/test_agent.dart';
+import '../../test_util/test_util.dart';
 
 ProviderScope _setUpWithFetchWeatherUseCaseProvider(
   WeatherRepository repository,
