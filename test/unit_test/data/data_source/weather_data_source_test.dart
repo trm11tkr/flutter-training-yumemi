@@ -6,13 +6,11 @@ import 'package:flutter_training/data/data_source/weather_data_source.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/views/constants/strings.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 import '../../../mocks/mock_yumemi_weather.mocks.dart';
 
-@GenerateMocks([YumemiWeather])
 void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
