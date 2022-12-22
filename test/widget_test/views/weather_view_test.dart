@@ -164,7 +164,7 @@ void main() {
                   data: defaultWeather,
                 ),
               );
-              
+
               expect(find.byType(StartUpView), findsOneWidget);
               expect(find.byType(WeatherView), findsNothing);
 
@@ -202,7 +202,10 @@ void main() {
     'success cases of api response',
     () {
       testWidgets(
-        'You should see svg picture of sunny.',
+        '''
+        When the repository returns AppApiResult.success 
+        and WeatherCondition.sunny, a sunny SvgPicture should be displayed.
+        ''',
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
@@ -228,7 +231,10 @@ void main() {
       );
 
       testWidgets(
-        'You should see svg picture of cloudy.',
+        '''
+        When the repository returns AppApiResult.success 
+        and WeatherCondition.cloudy, a cloudy SvgPicture should be displayed.
+        ''',
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
@@ -255,7 +261,10 @@ void main() {
       );
 
       testWidgets(
-        'You should see svg picture of rainy.',
+        '''
+        When the repository returns AppApiResult.success 
+        and WeatherCondition.rainy, a sunny SvgPicture should be displayed.
+        ''',
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
@@ -282,7 +291,11 @@ void main() {
       );
 
       testWidgets(
-        'You should see a max temperature.',
+        '''
+        When the repository returns AppApiResult.success 
+        and maxTemperature, a maxTemperature should be displayed.
+        Also, when the data is updated, it should be reflected on the screen.
+        ''',
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
@@ -323,7 +336,11 @@ void main() {
       );
 
       testWidgets(
-        'You should see a min temperature.',
+        '''
+        When the repository returns AppApiResult.success 
+        and minTemperature, a minTemperature should be displayed.
+        Also, when the data is updated, it should be reflected on the screen.
+        ''',
         (tester) async {
           await setUpOfDeviceSize();
           await tester.pumpWidget(
