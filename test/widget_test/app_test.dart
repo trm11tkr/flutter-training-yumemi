@@ -48,112 +48,107 @@ void main() {
           expect(find.byType(WeatherView), findsOneWidget);
         },
       );
-
-      testWidgets(
-        '''
+    },
+  );
+  testWidgets(
+    '''
         After tapping the close button in WeatherView, 
         you should be taken to the StartUpView.
         ''',
-        (tester) async {
-          await setUpOfDeviceSize();
-          await tester.runAsync(
-            () async {
-              await tester.pumpWidget(
-                const ProviderScope(
-                  child: MaterialApp(
-                    home: App(),
-                  ),
-                ),
-              );
-
-              expect(find.byType(StartUpView), findsOneWidget);
-              expect(find.byType(WeatherView), findsNothing);
-
-              await Future<void>.delayed(const Duration(milliseconds: 500));
-              await tester.pumpAndSettle();
-              expect(find.byType(StartUpView), findsNothing);
-              expect(find.byType(WeatherView), findsOneWidget);
-
-              await tester.tap(find.text('Close'));
-
-              await tester.pumpAndSettle();
-
-              expect(find.byType(StartUpView), findsOneWidget);
-              expect(find.byType(WeatherView), findsNothing);
-            },
+    (tester) async {
+      await setUpOfDeviceSize();
+      await tester.runAsync(
+        () async {
+          await tester.pumpWidget(
+            const ProviderScope(
+              child: MaterialApp(
+                home: App(),
+              ),
+            ),
           );
+
+          expect(find.byType(StartUpView), findsOneWidget);
+          expect(find.byType(WeatherView), findsNothing);
+
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+          expect(find.byType(StartUpView), findsNothing);
+          expect(find.byType(WeatherView), findsOneWidget);
+
+          await tester.tap(find.text('Close'));
+
+          await tester.pumpAndSettle();
+
+          expect(find.byType(StartUpView), findsOneWidget);
+          expect(find.byType(WeatherView), findsNothing);
         },
       );
+    },
+  );
 
-      testWidgets(
-        '''
+  testWidgets(
+    '''
         Tap the close button on the WeatherView 
         that shows the Weather returned from the repository, 
         and you should see the WeatherView in its initial state 
         after transitioning to the StartUpView
         ''',
-        (tester) async {
-          await setUpOfDeviceSize();
-          await tester.runAsync(
-            () async {
-              await tester.pumpWidget(
-                ProviderScope(
-                  overrides: [
-                    fetchWeatherUseCaseProvider.overrideWith(
-                      (ref) => FetchWeatherUseCase(
-                        ref: ref,
-                        repository: repository,
-                        request: defaultRequest,
-                      ),
-                    )
-                  ],
-                  // When the Close button is tapped,
-                  // Navigator.of(context).pop() is called.
-                  // So at first, specify "App" in "child"
-                  // and go through StartUpView.
-                  child: const MaterialApp(
-                    home: App(),
+    (tester) async {
+      await setUpOfDeviceSize();
+      await tester.runAsync(
+        () async {
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                fetchWeatherUseCaseProvider.overrideWith(
+                  (ref) => FetchWeatherUseCase(
+                    ref: ref,
+                    repository: repository,
+                    request: defaultRequest,
                   ),
-                ),
-              );
-
-              when(
-                repository.getWeather(request: defaultRequest),
-              ).thenReturn(
-                AppApiResult.success(
-                  data: defaultWeather,
-                ),
-              );
-
-              expect(find.byType(StartUpView), findsOneWidget);
-              expect(find.byType(WeatherView), findsNothing);
-
-              await Future<void>.delayed(const Duration(milliseconds: 500));
-              await tester.pumpAndSettle();
-              expect(find.byType(StartUpView), findsNothing);
-              expect(find.byType(WeatherView), findsOneWidget);
-
-              await tester.tap(find.text('Reload'));
-              await tester.pump();
-
-              expectSvgPicture('assets/images/sunny.svg', findsOneWidget);
-              expect(find.text('25℃'), findsOneWidget);
-              expect(find.text('7℃'), findsOneWidget);
-
-              await tester.tap(find.text('Close'));
-              await tester.pumpAndSettle();
-
-              expect(find.byType(StartUpView), findsOneWidget);
-              expect(find.byType(WeatherView), findsNothing);
-              await Future<void>.delayed(const Duration(milliseconds: 500));
-              await tester.pumpAndSettle();
-
-              expect(find.byType(StartUpView), findsNothing);
-              expect(find.byType(WeatherView), findsOneWidget);
-              expect(find.byType(Placeholder), findsOneWidget);
-              expect(find.text('**℃'), findsNWidgets(2));
-            },
+                )
+              ],
+              child: const MaterialApp(
+                home: App(),
+              ),
+            ),
           );
+
+          when(
+            repository.getWeather(request: defaultRequest),
+          ).thenReturn(
+            AppApiResult.success(
+              data: defaultWeather,
+            ),
+          );
+
+          expect(find.byType(StartUpView), findsOneWidget);
+          expect(find.byType(WeatherView), findsNothing);
+
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+          expect(find.byType(StartUpView), findsNothing);
+          expect(find.byType(WeatherView), findsOneWidget);
+
+          await tester.tap(find.text('Reload'));
+          await tester.pump();
+
+          expectSvgPicture('assets/images/sunny.svg', findsOneWidget);
+          expect(find.text('25℃'), findsOneWidget);
+          expect(find.text('7℃'), findsOneWidget);
+
+          await tester.tap(find.text('Close'));
+          await tester.pumpAndSettle();
+
+          expect(find.byType(StartUpView), findsOneWidget);
+          expect(find.byType(WeatherView), findsNothing);
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+
+          expect(find.byType(StartUpView), findsNothing);
+          expect(find.byType(WeatherView), findsOneWidget);
+          expect(find.byType(Placeholder), findsOneWidget);
+          expect(find.text('**℃'), findsNWidgets(2));
         },
       );
     },
