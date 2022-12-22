@@ -5,7 +5,7 @@ import 'package:flutter_training/app.dart';
 import 'package:flutter_training/views/start_up_view.dart';
 import 'package:flutter_training/views/weather_view.dart';
 
-import '../../test_util/test_agent.dart';
+import '../test_util/test_agent.dart';
 
 void main() {
   testWidgets(
