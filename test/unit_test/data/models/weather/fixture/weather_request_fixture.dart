@@ -2,11 +2,12 @@ import 'package:data_fixture_dart/data_fixture_dart.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 
 extension WeatherRequestFixture on WeatherRequest {
-  static WeatherRequestFixtureFactory factory() =>
-      WeatherRequestFixtureFactory();
+  // ignore: library_private_types_in_public_api
+  static _WeatherRequestFixtureFactory factory() =>
+      _WeatherRequestFixtureFactory();
 }
 
-class WeatherRequestFixtureFactory extends JsonFixtureFactory<WeatherRequest> {
+class _WeatherRequestFixtureFactory extends JsonFixtureFactory<WeatherRequest> {
   @override
   FixtureDefinition<WeatherRequest> definition() => define(
         (faker) {

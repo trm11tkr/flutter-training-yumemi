@@ -3,22 +3,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
-import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/data/use_case/fetch_weather_use_case.dart';
 import 'package:flutter_training/views/components/weather_forecast_panel/temperature/ui_state.dart';
 import 'package:flutter_training/views/components/weather_forecast_panel/weather_image_panel/ui_state.dart';
 import 'package:flutter_training/views/constants/strings.dart';
 import 'package:flutter_training/views/ui_state/weather_view_ui_state.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'fetch_weather_use_case_test.mocks.dart';
+import '../../../mocks/mock_weather_repository.mocks.dart';
 
 class Listener<T> extends Mock {
   void call(T? previous, T value);
 }
 
-@GenerateMocks([WeatherRepository])
 void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),

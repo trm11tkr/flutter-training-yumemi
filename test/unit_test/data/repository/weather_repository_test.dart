@@ -1,23 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/data/app_exception.dart';
-import 'package:flutter_training/data/data_source/weather_data_source.dart';
 import 'package:flutter_training/data/models/app_api_result.dart';
 import 'package:flutter_training/data/models/weather/weather.dart';
 import 'package:flutter_training/data/models/weather/weather_request.dart';
 import 'package:flutter_training/data/repository/weather_repository.dart';
 import 'package:flutter_training/views/constants/strings.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'weather_repository_test.mocks.dart';
+import '../../../mocks/mock_weather_data_source.mocks.dart';
 
-@GenerateMocks([WeatherDataSource])
 void main() {
   final defaultRequest = WeatherRequest(
     date: DateTime.now(),
   );
   final dataSource = MockWeatherDataSource();
-  final repository =  WeatherRepository(dataSource);
+  final repository = WeatherRepository(dataSource);
 
   group(
     'getWeather of WeatherRepository',
@@ -87,8 +84,7 @@ void main() {
             ),
           );
 
-          final act =
-              repository.getWeather(request: defaultRequest);
+          final act = repository.getWeather(request: defaultRequest);
           const expected = AppApiResult<Weather>.failure(
             message: Strings.invalidParameterError,
           );

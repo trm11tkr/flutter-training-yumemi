@@ -3,10 +3,11 @@ import 'package:flutter_training/data/models/weather/weather.dart';
 import '../../../../../extension/extension.dart';
 
 extension WeatherFixture on Weather {
-  static WeatherFixtureFactory factory() => WeatherFixtureFactory();
+  // ignore: library_private_types_in_public_api
+  static _WeatherFixtureFactory factory() => _WeatherFixtureFactory();
 }
 
-class WeatherFixtureFactory extends JsonFixtureFactory<Weather> {
+class _WeatherFixtureFactory extends JsonFixtureFactory<Weather> {
   @override
   FixtureDefinition<Weather> definition() => define(
         (faker) {
